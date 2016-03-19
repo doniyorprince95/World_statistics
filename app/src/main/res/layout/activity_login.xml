@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ikuchko.world_population.LoginActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/world_map_hands"
+        android:scaleType="centerCrop" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/nameEditText"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:hint="Enter your name"
+        android:textSize="26sp"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:background="@color/colorIconsTransparent"
+        android:textColorHint="@color/colorPrimaryText"
+        android:textColor="@color/colorPrimary"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:background="@color/colorAccent"
+        android:width="200dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/submitButton"
+        android:layout_below="@+id/nameEditText"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
