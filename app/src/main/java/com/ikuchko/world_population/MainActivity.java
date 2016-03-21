@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     TypedArray countriesStorage;
     Country country;
     ArrayList<Country> countryArrayTemp = new ArrayList<>();
-    Country[] countryArray;
 
     @Bind(R.id.countryGridView) GridView countryGridView;
 
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//        countryArray = prepareArrayOfCountries();
         countryGridView.setAdapter(new CountriesAdapter(MainActivity.this, prepareArrayOfCountries()));
     }
 
