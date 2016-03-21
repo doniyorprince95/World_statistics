@@ -20,6 +20,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ikuchko.world_population.MainActivity" />
         </activity>
+        <activity android:name=".HumanAgeActivity"></activity>
     </application>
 
 </manifest>

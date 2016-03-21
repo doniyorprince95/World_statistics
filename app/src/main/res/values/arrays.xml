@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="countries">
+        <item>@array/ukraine</item>
+        <item>@array/kazakhstan</item>
+        <item>@array/saudiArabia</item>
+        <item>@array/korea</item>
+        <item>@array/scotland</item>
+        <item>@array/serbia</item>
+        <item>@array/unitedKingdom</item>
+        <item>@array/unitedState</item>
+    </array>
+
+    <array name="ukraine">
+        <item>Ukraine</item>
+        <item>45892000</item>
+        <item>@drawable/ukraine</item>
+    </array>
+
+    <array name="kazakhstan">
+        <item>Kazakhstan</item>
+        <item>24892000</item>
+        <item>@drawable/kazakhstan</item>
+    </array>
+
+    <array name="korea">
+        <item>Korea</item>
+        <item>23560023</item>
+        <item>@drawable/korea</item>
+    </array>
+
+    <array name="saudiArabia">
+        <item>Saudi Arabia</item>
+        <item>23560023</item>
+        <item>@drawable/saudiarabia</item>
+    </array>
+
+    <array name="scotland">
+        <item>Scotland</item>
+        <item>23560023</item>
+        <item>@drawable/scotland</item>
+    </array>
+
+    <array name="serbia">
+        <item>Serbia</item>
+        <item>23560023</item>
+        <item>@drawable/serbia</item>
+    </array>
+
+    <array name="unitedKingdom">
+        <item>United Kingdom</item>
+        <item>23560023</item>
+        <item>@drawable/unitedkingdom</item>
+    </array>
+
+    <array name="unitedState">
+        <item>United State</item>
+        <item>23560023</item>
+        <item>@drawable/unitedstate</item>
+    </array>
+
+</resources>
