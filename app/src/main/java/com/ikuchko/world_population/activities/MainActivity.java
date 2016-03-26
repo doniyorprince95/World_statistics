@@ -1,4 +1,4 @@
-package com.ikuchko.world_population;
+package com.ikuchko.world_population.activities;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -8,9 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
-import java.util.ArrayList;
+import com.ikuchko.world_population.apapters.CountriesAdapter;
+import com.ikuchko.world_population.R;
+import com.ikuchko.world_population.models.Country;
 
-import javax.xml.transform.Source;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -1,4 +1,4 @@
-package com.ikuchko.world_population;
+package com.ikuchko.world_population.models;
 
 /**
  * Created by iliak on 3/20/16.
