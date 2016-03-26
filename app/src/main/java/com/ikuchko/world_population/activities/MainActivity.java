@@ -11,11 +11,16 @@ import android.widget.GridView;
 import com.ikuchko.world_population.apapters.CountriesAdapter;
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.models.Country;
+import com.ikuchko.world_population.services.populationService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     TypedArray countriesStorage;
@@ -29,25 +34,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        countryGridView.setAdapter(new CountriesAdapter(MainActivity.this, prepareArrayOfCountries()));
+
+        getCountries();
     }
 
-    public Country[] prepareArrayOfCountries () {
-        TypedArray specificCountry;
-        Integer population;
-        Integer imageId;
-        String countryName;
-        countriesStorage = getResources().obtainTypedArray(R.array.countries);
-        for (int i=0; i<countriesStorage.length(); i++) {
-            specificCountry = getResources().obtainTypedArray(countriesStorage.getResourceId(i, -1));
-            countryName = specificCountry.getString(0);
-            population = Integer.parseInt(specificCountry.getString(1));
-            imageId = specificCountry.getResourceId(2, -1);
-            country = new Country(countryName, population, imageId);
-            countryArrayTemp.add(country);
-        }
-        Country[] countryArray = new Country[countryArrayTemp.size()];
-        return countryArrayTemp.toArray(countryArray);
+    private void getCountries() {
+        final populationService movieService = new populationService(this);
+
+        movieService.findCountries(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                populationService.processCountries(response);
+            }
+        });
     }
 
     //inflate the menu

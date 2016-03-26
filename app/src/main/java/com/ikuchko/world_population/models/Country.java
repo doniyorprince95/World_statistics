@@ -24,6 +24,10 @@ public class Country {
 
     ArrayList<Country> countryList = new ArrayList<>();
 
+    public Country() {
+
+    }
+
     public Country(String name, String capital, String region, Integer population, Integer area, ArrayList<String> timezones, ArrayList<String> borders, String nativeName, String alpha2Code, String alpha3Code, ArrayList<String> currencies, ArrayList<String> languages) {
         this.name = name;
         this.capital = capital;

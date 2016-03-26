@@ -1,6 +1,7 @@
 package com.ikuchko.world_population.services;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.models.Country;
@@ -22,6 +23,7 @@ import okhttp3.Response;
  * Created by iliak on 3/25/16.
  */
 public class populationService {
+    private final static String TAG = populationService.class.getSimpleName();
     private Context context;
 
     public populationService(Context context) {
@@ -75,6 +77,19 @@ public class populationService {
                         languages.add(languagesJSON.getString(j));
                     }
                     new Country(name, capital, region, population, area, timezones, borders, nativeName, alpha2Code, alpha3Code, currencies, languages);
+
+                    Log.d(TAG, name);
+                    Log.d(TAG, capital);
+                    Log.d(TAG, region);
+                    Log.d(TAG, population.toString());
+                    Log.d(TAG, area.toString());
+                    Log.d(TAG, timezones.toString());
+                    Log.d(TAG, borders.toString());
+                    Log.d(TAG, nativeName);
+                    Log.d(TAG, alpha2Code);
+                    Log.d(TAG, alpha3Code);
+                    Log.d(TAG, currencies.toString());
+                    Log.d(TAG, languages.toString());
                 }
             }
         } catch (IOException ioe) {
