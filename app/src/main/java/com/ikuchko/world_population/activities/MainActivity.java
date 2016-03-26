@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
-import com.ikuchko.world_population.apapters.CountriesAdapter;
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.services.populationService;

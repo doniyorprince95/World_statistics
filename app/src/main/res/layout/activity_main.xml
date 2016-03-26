@@ -14,11 +14,10 @@
         android:src="@drawable/world_map"
         android:scaleType="centerCrop" />
 
-    <GridView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/countryGridView"
-        android:numColumns="2"/>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/countryRecyclerView"/>
 
 
 </RelativeLayout>
