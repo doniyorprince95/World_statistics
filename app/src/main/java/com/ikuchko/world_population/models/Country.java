@@ -22,7 +22,7 @@ public class Country {
     ArrayList<String> currencies;
     ArrayList<String> languages;
     String flagImage;
-    ArrayList<Country> countryList = new ArrayList<>();
+    static ArrayList<Country> countryList = new ArrayList<>();
 
     public Country() {
 
@@ -41,7 +41,7 @@ public class Country {
         this.alpha3Code = alpha3Code;
         this.currencies = currencies;
         this.languages = languages;
-        this.flagImage = "http://www.geonames.org/flags/x/" + alpha2Code + "gif";
+        this.flagImage = "http://www.geonames.org/flags/x/" + alpha2Code.toLowerCase() + ".gif";
         this.countryList.add(this);
     }
 
@@ -95,5 +95,9 @@ public class Country {
 
     public ArrayList<String> getLanguages() {
         return languages;
+    }
+
+    public static ArrayList<Country> getCountryList() {
+        return countryList;
     }
 }

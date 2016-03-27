@@ -47,16 +47,36 @@ public class populationService {
                 JSONArray resultJSON = new JSONArray(jsonData);
                 for (int i=0; i<resultJSON.length(); i++) {
                     JSONObject countryJSON = resultJSON.getJSONObject(i);
-                    String name = countryJSON.getString("name");
-                    String capital = countryJSON.getString("capital");
-                    JSONArray altSpellingsJSON = countryJSON.getJSONArray("altSpellings");
+                    String name;
+                    try {
+                        name = countryJSON.getString("name");
+                    } catch (JSONException jsone) {
+                        name = "information is not available";
+                    }
+                    String capital;
+                    try {
+                        capital = countryJSON.getString("capital");
+                    } catch (JSONException jsone) {
+                        capital = "information now found";
+                        jsone.printStackTrace();
+                    }
                     String region = countryJSON.getString("region");
                     Integer population = countryJSON.getInt("population");
-                    Integer area = countryJSON.getInt("area");
-                    JSONArray timezonesJSON = countryJSON.getJSONArray("timezones");
+                    Integer area;
+                    try {
+                        area = countryJSON.getInt("area");
+                    } catch (JSONException jsone) {
+                        area = 0;
+                        jsone.printStackTrace();
+                    }
                     ArrayList<String> timezones = new ArrayList<>();
-                    for (int j=0; j<timezonesJSON.length(); j++) {
-                        timezones.add(timezonesJSON.getString(j));
+                    try {
+                        JSONArray timezonesJSON = countryJSON.getJSONArray("timezones");
+                        for (int j=0; j<timezonesJSON.length(); j++) {
+                            timezones.add(timezonesJSON.getString(j));
+                        }
+                    } catch (JSONException jsone) {
+                        jsone.printStackTrace();
                     }
                     JSONArray bordersJSON = countryJSON.getJSONArray("borders");
                     ArrayList<String> borders = new ArrayList<>();
@@ -95,6 +115,7 @@ public class populationService {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } catch (JSONException jsone) {
+            Log.d(TAG, "error stack bellow");
             jsone.printStackTrace();
         }
     }

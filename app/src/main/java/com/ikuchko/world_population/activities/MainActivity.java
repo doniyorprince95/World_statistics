@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
 import com.ikuchko.world_population.R;
+import com.ikuchko.world_population.apapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.services.populationService;
 
@@ -25,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
     TypedArray countriesStorage;
     Country country;
     ArrayList<Country> countryArrayTemp = new ArrayList<>();
+    private CountryListAdapter adapter;
 
-    @Bind(R.id.countryGridView) GridView countryGridView;
+    @Bind(R.id.countryRecyclerView) RecyclerView countryRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +45,39 @@ public class MainActivity extends AppCompatActivity {
     private void getCountries() {
         final populationService movieService = new populationService(this);
 
-        movieService.findCountries(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
+        if (Country.getCountryList().size() == 0) {
+            movieService.findCountries(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                populationService.processCountries(response);
-            }
-        });
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    populationService.processCountries(response);
+
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter = new CountryListAdapter(Country.getCountryList(), getApplicationContext());
+                            countryRecyclerView.setAdapter(adapter);
+                            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 2);
+                            countryRecyclerView.setLayoutManager(layoutManager);
+                            countryRecyclerView.setHasFixedSize(true);
+                        }
+                    });
+                }
+            });
+        } else {
+            adapter = new CountryListAdapter(Country.getCountryList(), getApplicationContext());
+            countryRecyclerView.setAdapter(adapter);
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 2);
+            countryRecyclerView.setLayoutManager(layoutManager);
+            countryRecyclerView.setHasFixedSize(true);
+        }
     }
+
+
 
     //inflate the menu
     @Override

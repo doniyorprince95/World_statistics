@@ -2,6 +2,7 @@ package com.ikuchko.world_population.apapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import butterknife.ButterKnife;
  * Created by iliak on 3/18/16.
  */
 public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.CountryViewHolder>{
+    private final static String TAG = CountryListAdapter.class.getSimpleName();
     private ArrayList<Country> countries = new ArrayList<>();
     private Context context;
 
@@ -55,13 +57,19 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
         public CountryViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
-            ButterKnife.bind(context, itemView);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bindCountry(Country country) {
-            Picasso.with(context).load(country.getFlagImage()).fit().into(flagView);
-            countryName.setText(country.getName());
-            population.setText(country.getPopulation());
+            try {
+                String str = country.getFlagImage();
+                Picasso.with(context).load(country.getFlagImage()).fit().into(flagView);
+                countryName.setText(country.getName());
+                population.setText(country.getPopulation().toString());
+            } catch (NullPointerException npe) {
+                Log.e(TAG, "nullPointException on: " + npe.getMessage());
+                npe.printStackTrace();
+            }
         }
     }
 }
