@@ -53,6 +53,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
         @Bind(R.id.flagView) ImageView flagView;
         @Bind(R.id.countryName) TextView countryName;
         @Bind(R.id.population) TextView population;
+        @Bind(R.id.capital) TextView capital;
 
         public CountryViewHolder(View itemView) {
             super(itemView);
@@ -63,8 +64,9 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
         public void bindCountry(Country country) {
             try {
                 String str = country.getFlagImage();
-                Picasso.with(context).load(country.getFlagImage()).fit().into(flagView);
+                Picasso.with(context).load(country.getFlagImage()).placeholder(R.drawable.placeholder).resize(300, 156).centerCrop().into(flagView);
                 countryName.setText(country.getName());
+                capital.setText(country.getCapital());
                 population.setText(country.getPopulation().toString());
             } catch (NullPointerException npe) {
                 Log.e(TAG, "nullPointException on: " + npe.getMessage());

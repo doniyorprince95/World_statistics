@@ -9,13 +9,14 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="100dp"
         android:layout_marginTop="20dp"
         android:padding="10dp"
         android:background="@color/colorIconsTransparent">
 
         <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             tools:src="@drawable/ukraine"
             android:id="@+id/flagView" />
 
@@ -30,18 +31,60 @@
                 tools:text="Ukraine"
                 android:id="@+id/countryName"
                 android:textSize="25sp"
-                android:textColor="@color/colorPrimary"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true" />
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorPrimary"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="45897525"
-                android:id="@+id/population"
-                android:textSize="20sp"
-                android:textColor="@color/colorPrimary"
-                android:layout_below="@+id/countryName" />
+                android:layout_below="@id/countryName"
+                android:id="@+id/capitalLinearLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/capitalTitle"
+                    android:text="Capital: "
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_weight="0"
+                    android:layout_below="@+id/countryName" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="AsDA"
+                    android:id="@+id/capital"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_below="@id/countryName"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/capitalLinearLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Population: "
+                    android:layout_weight="0"
+                    android:id="@+id/populationTitle"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="45897525"
+                    android:id="@+id/population"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimary" />
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 

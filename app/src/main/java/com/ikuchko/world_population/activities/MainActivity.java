@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private void populateRecycleView() {
         adapter = new CountryListAdapter(Country.getCountryList(), getApplicationContext());
         countryRecyclerView.setAdapter(adapter);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 2);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         countryRecyclerView.setLayoutManager(layoutManager);
         countryRecyclerView.setHasFixedSize(true);
     }
