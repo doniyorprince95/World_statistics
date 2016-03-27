@@ -59,25 +59,23 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            adapter = new CountryListAdapter(Country.getCountryList(), getApplicationContext());
-                            countryRecyclerView.setAdapter(adapter);
-                            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 2);
-                            countryRecyclerView.setLayoutManager(layoutManager);
-                            countryRecyclerView.setHasFixedSize(true);
+                            populateRecycleView();
                         }
                     });
                 }
             });
         } else {
-            adapter = new CountryListAdapter(Country.getCountryList(), getApplicationContext());
-            countryRecyclerView.setAdapter(adapter);
-            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 2);
-            countryRecyclerView.setLayoutManager(layoutManager);
-            countryRecyclerView.setHasFixedSize(true);
+            populateRecycleView();
         }
     }
 
-
+    private void populateRecycleView() {
+        adapter = new CountryListAdapter(Country.getCountryList(), getApplicationContext());
+        countryRecyclerView.setAdapter(adapter);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 2);
+        countryRecyclerView.setLayoutManager(layoutManager);
+        countryRecyclerView.setHasFixedSize(true);
+    }
 
     //inflate the menu
     @Override
