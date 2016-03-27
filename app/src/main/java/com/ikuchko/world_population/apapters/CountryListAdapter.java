@@ -64,7 +64,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
         public void bindCountry(Country country) {
             try {
                 String str = country.getFlagImage();
-                Picasso.with(context).load(country.getFlagImage()).placeholder(R.drawable.placeholder).resize(300, 156).centerCrop().into(flagView);
+                Picasso.with(context).load(country.getFlagImage()).resize(300, 156).placeholder(R.drawable.placeholder).centerCrop().into(flagView);
                 countryName.setText(country.getName());
                 capital.setText(country.getCapital());
                 population.setText(country.getPopulation().toString());
