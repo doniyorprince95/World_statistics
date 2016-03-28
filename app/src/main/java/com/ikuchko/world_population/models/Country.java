@@ -74,6 +74,21 @@ public class Country {
     }
 
     public ArrayList<String> getBorders() {
+        if (borders.size() > 0) {
+            int count = 0;
+            outerloop:
+            for (int i=0; i<countryList.size(); i++) {
+                for (int j=0; j<borders.size(); j++) {
+                    if (countryList.get(i).getAlpha3Code().equals(borders.get(j))) {
+                        borders.set(j, countryList.get(i).getName());
+                        count ++;
+                        if (count == borders.size()) {
+                            break outerloop;
+                        }
+                    }
+                }
+            }
+        }
         return borders;
     }
 
