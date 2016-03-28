@@ -60,7 +60,8 @@ public class CountryDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_country_detail, container, false);
         ButterKnife.bind(this, view);
 
-        Picasso.with(view.getContext()).load(country.getFlagImage()).fit().into(flagImageView);
+        Picasso.with(view.getContext()).load(country.getFlagImage()).resize(300, 156).centerCrop().into(flagImageView);
+        String str = country.getFlagImage();
         countryTextView.setText(country.getName());
         capitalTextView.setText(country.getCapital());
         regionTextView.setText(country.getRegion());

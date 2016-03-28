@@ -1,6 +1,7 @@
 package com.ikuchko.world_population.apapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ikuchko.world_population.R;
+import com.ikuchko.world_population.activities.CounrtyDetailActivity;
 import com.ikuchko.world_population.models.Country;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -59,6 +63,16 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
             super(itemView);
             context = itemView.getContext();
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int itemPosition = getLayoutPosition();
+                    Intent intent = new Intent(context, CounrtyDetailActivity.class);
+                    intent.putExtra("position", itemPosition + "");
+                    intent.putExtra("country", Parcels.wrap(countries));
+                    context.startActivity(intent);
+                }
+            });
         }
 
         public void bindCountry(Country country) {
