@@ -115,4 +115,20 @@ public class Country {
     public static ArrayList<Country> getCountryList() {
         return countryList;
     }
+
+    public String getShareContent() {
+        String country = "Country: " + getName();
+        String capital = "Capital: " + getCapital();
+        String region = "Region: " + getRegion();
+        String nativeName = "Native name: " + getNativeName();
+        String alpha2code = "2 leters code: " + getAlpha2Code();
+        String alpha3code = "3 leters code: " + getAlpha3Code();
+        String population = "Population: " + getPopulation().toString();
+        String area = "Area: " + getArea();
+        String borders = "Borders: " + getBorders();
+        String currenceis = "Currencies: " + getCurrencies();
+        String languages = "Languages: " + getLanguages();
+        return country + "\n" + capital + "\n" + region + "\n" + nativeName + "\n" + alpha2code + "\n" + alpha3code + "\n"
+                + population  + "\n" + area + "\n" + borders + "\n" + currenceis + "\n" + languages;
+    }
 }

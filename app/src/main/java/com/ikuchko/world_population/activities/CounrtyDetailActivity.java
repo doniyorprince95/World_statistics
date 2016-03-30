@@ -1,8 +1,11 @@
 package com.ikuchko.world_population.activities;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.apapters.CountryPagerAdapter;
@@ -32,5 +35,31 @@ public class CounrtyDetailActivity extends AppCompatActivity {
         adapter = new CountryPagerAdapter(getSupportFragmentManager(), countries);
         mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(startPosition);
+    }
+
+    //inflate the menu
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        getMenuInflater().inflate(R.menu.country_detail_menu, menu);
+        return true;
+    }
+
+    //Determine if actionBar item was selected. If true then do corresponding actions
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.share:
+                Country currentCountry = countries.get(mViewPager.getCurrentItem());
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, currentCountry.getShareContent());
+                intent.setType("text/plain");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent.createChooser(intent, getResources().getString(R.string.intentTitle)));
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
