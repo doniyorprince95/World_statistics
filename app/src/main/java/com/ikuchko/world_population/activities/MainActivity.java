@@ -1,5 +1,6 @@
 package com.ikuchko.world_population.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Country country;
     ArrayList<Country> countryArrayTemp = new ArrayList<>();
     private CountryListAdapter adapter;
+    public static ProgressDialog loadingDialog;
 
     @Bind(R.id.countryRecyclerView) RecyclerView countryRecyclerView;
 
@@ -38,15 +40,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initializeProgressDialog();
+        loadingDialog.show();
 
         getCountries();
     }
 
+    private void initializeProgressDialog() {
+        loadingDialog = new ProgressDialog(this);
+        loadingDialog.setTitle("loading...");
+        loadingDialog.setMessage("Preparing data...");
+        loadingDialog.setCancelable(false);
+    }
+
     private void getCountries() {
-        final CountriesService movieService = new CountriesService(this);
+        final CountriesService countryService = new CountriesService(this);
 
         if (Country.getCountryList().size() == 0) {
-            movieService.findCountries(new Callback() {
+            countryService.findCountries(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     e.printStackTrace();
@@ -56,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                     CountriesService.processCountries(response);
 
-
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             populateRecycleView();
                         }
                     });
+                    for (Country country : Country.getCountryList()) {
+                        getIndicators(country.getAlpha2Code());
+                    }
                 }
             });
         } else {
@@ -70,8 +83,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getIndicators () {
-        final WorldBankService worldBankService;
+    private void getIndicators (String countryCode) {
+        final WorldBankService worldBankService = new WorldBankService(MainActivity.this, countryCode);
+
+        worldBankService.findIndicator(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                WorldBankService.processIndicator(response);
+            }
+        });
+
     }
 
     private void populateRecycleView() {
@@ -80,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         countryRecyclerView.setLayoutManager(layoutManager);
         countryRecyclerView.setHasFixedSize(true);
+        loadingDialog.hide();
     }
 
     //inflate the menu

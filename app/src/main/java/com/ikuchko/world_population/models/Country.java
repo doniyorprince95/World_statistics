@@ -22,12 +22,16 @@ public class Country {
     private ArrayList<String> currencies;
     private ArrayList<String> languages;
     private String flagImage;
-    private ArrayList<Indicator> gdpIndicators = new ArrayList<>();
+    ArrayList<Indicator> gdpIndicators = new ArrayList<>();
     static ArrayList<Country> countryList = new ArrayList<>();
 
 
     public Country() {
 
+    }
+
+    public ArrayList<Indicator> getGdpIndicators() {
+        return gdpIndicators;
     }
 
     public Country(String name, String capital, String region, Integer population, Integer area, ArrayList<String> timezones, ArrayList<String> borders, String nativeName, String alpha2Code, String alpha3Code, ArrayList<String> currencies, ArrayList<String> languages) {
@@ -147,15 +151,5 @@ public class Country {
         gdpIndicators.add(new Indicator(indicatorName, value, date));
     }
 
-    private class Indicator {
-        private String indicatorName;
-        private String value;
-        private String date;
 
-        public Indicator(String indicatorName, String value, String date) {
-            this.indicatorName = indicatorName;
-            this.value = value;
-            this.date = date;
-        }
-    }
 }

@@ -1,5 +1,6 @@
 package com.ikuchko.world_population.apapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.activities.CounrtyDetailActivity;
+import com.ikuchko.world_population.activities.MainActivity;
 import com.ikuchko.world_population.models.Country;
 import com.squareup.picasso.Picasso;
 
@@ -66,6 +68,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MainActivity.loadingDialog.show();
                     int itemPosition = getLayoutPosition();
                     Intent intent = new Intent(context, CounrtyDetailActivity.class);
                     intent.putExtra("position", itemPosition + "");
@@ -78,7 +81,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
         public void bindCountry(Country country) {
             try {
                 String str = country.getFlagImage();
-                Picasso.with(context).load(country.getFlagImage()).resize(300, 156).placeholder(R.drawable.placeholder).centerCrop().into(flagView);
+                Picasso.with(context).load(country.getFlagImage()).resize(300, 156).centerCrop().into(flagView);
                 countryName.setText(country.getName());
                 capital.setText(country.getCapital());
                 population.setText(country.getPopulation().toString());

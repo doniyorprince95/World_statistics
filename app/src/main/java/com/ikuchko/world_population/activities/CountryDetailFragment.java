@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ikuchko.world_population.R;
+import com.ikuchko.world_population.apapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.squareup.picasso.Picasso;
 
@@ -36,6 +37,7 @@ public class CountryDetailFragment extends Fragment {
     @Bind(R.id.bordersTextView) TextView bordersTextView;
     @Bind(R.id.currenciesTextView) TextView currenciesTextView;
     @Bind(R.id.languagesTextView) TextView languagesTextView;
+    @Bind(R.id.gdpPerCapitaTextView) TextView gdpPerCapitaTextView;
     private Country country;
 
 
@@ -61,7 +63,6 @@ public class CountryDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         Picasso.with(view.getContext()).load(country.getFlagImage()).resize(300, 156).centerCrop().into(flagImageView);
-        String str = country.getFlagImage();
         countryTextView.setText(country.getName());
         capitalTextView.setText(country.getCapital());
         regionTextView.setText(country.getRegion());
@@ -73,6 +74,11 @@ public class CountryDetailFragment extends Fragment {
         bordersTextView.setText(android.text.TextUtils.join(", ", country.getBorders()));
         currenciesTextView.setText(android.text.TextUtils.join(", ", country.getCurrencies()));
         languagesTextView.setText(android.text.TextUtils.join(", ", country.getLanguages()));
+        if (country.getGdpIndicators().size() > 0) {
+            String str = country.getGdpIndicators().get(0).getValue();
+            gdpPerCapitaTextView.setText(country.getGdpIndicators().get(0).getValue());
+        }
+        MainActivity.loadingDialog.hide();
         return view;
     }
 
