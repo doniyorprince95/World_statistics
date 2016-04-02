@@ -4,17 +4,16 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.GridView;
 
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.apapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
-import com.ikuchko.world_population.services.populationService;
+import com.ikuchko.world_population.services.CountriesService;
+import com.ikuchko.world_population.services.WorldBankService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     TypedArray countriesStorage;
     Country country;
     ArrayList<Country> countryArrayTemp = new ArrayList<>();
@@ -39,12 +39,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        float scale = getApplicationContext().getResources().getDisplayMetrics().density;
         getCountries();
     }
 
     private void getCountries() {
-        final populationService movieService = new populationService(this);
+        final CountriesService movieService = new CountriesService(this);
 
         if (Country.getCountryList().size() == 0) {
             movieService.findCountries(new Callback() {
@@ -55,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    populationService.processCountries(response);
+                    CountriesService.processCountries(response);
+
 
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             populateRecycleView();
         }
+    }
+
+    private void getIndicators () {
+        final WorldBankService worldBankService;
     }
 
     private void populateRecycleView() {

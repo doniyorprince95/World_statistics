@@ -22,16 +22,16 @@ import okhttp3.Response;
 /**
  * Created by iliak on 3/25/16.
  */
-public class populationService {
-    private final static String TAG = populationService.class.getSimpleName();
+public class CountriesService {
+    private final static String TAG = CountriesService.class.getSimpleName();
     private Context context;
 
-    public populationService(Context context) {
+    public CountriesService(Context context) {
         this.context = context;
     }
 
     public void findCountries (Callback callback) {
-        final String URL = context.getString(R.string.countryRequest);
+        final String URL = context.getString(R.string.countryURL);
 
         OkHttpClient client = new OkHttpClient.Builder().build();
 

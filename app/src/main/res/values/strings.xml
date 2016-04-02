@@ -2,7 +2,8 @@
     <string name="app_name">World_population</string>
     <string name="signin">Sing in</string>
 
-    <string name="countryRequest">https://restcountries.eu/rest/v1/all</string>
+    <string name="countryURL">https://restcountries.eu/rest/v1/all</string>
+    <string name="worldBankURL">http://api.worldbank.org/countries/</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

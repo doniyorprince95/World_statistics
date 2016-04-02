@@ -9,20 +9,22 @@ import java.util.ArrayList;
  */
 @Parcel
 public class Country {
-    String name;
-    String capital;
-    String region;
-    Integer population;
-    Integer area;
-    ArrayList<String> timezones;
-    ArrayList<String> borders;
-    String nativeName;
-    String alpha2Code;
-    String alpha3Code;
-    ArrayList<String> currencies;
-    ArrayList<String> languages;
-    String flagImage;
+    private String name;
+    private String capital;
+    private String region;
+    private Integer population;
+    private Integer area;
+    private ArrayList<String> timezones;
+    private ArrayList<String> borders;
+    private String nativeName;
+    private String alpha2Code;
+    private String alpha3Code;
+    private ArrayList<String> currencies;
+    private ArrayList<String> languages;
+    private String flagImage;
+    private ArrayList<Indicator> gdpIndicators = new ArrayList<>();
     static ArrayList<Country> countryList = new ArrayList<>();
+
 
     public Country() {
 
@@ -130,5 +132,30 @@ public class Country {
         String languages = "Languages: " + getLanguages();
         return country + "\n" + capital + "\n" + region + "\n" + nativeName + "\n" + alpha2code + "\n" + alpha3code + "\n"
                 + population  + "\n" + area + "\n" + borders + "\n" + currenceis + "\n" + languages;
+    }
+
+    public static Country getCountryByCode(String code) {
+        for (int i=0; i<countryList.size(); i++) {
+            if (countryList.get(i).getAlpha2Code().equals(code)) {
+                return countryList.get(i);
+            }
+        }
+        return null;
+    }
+
+    public void setIndicatorGDP(String indicatorName, String value, String date) {
+        gdpIndicators.add(new Indicator(indicatorName, value, date));
+    }
+
+    private class Indicator {
+        private String indicatorName;
+        private String value;
+        private String date;
+
+        public Indicator(String indicatorName, String value, String date) {
+            this.indicatorName = indicatorName;
+            this.value = value;
+            this.date = date;
+        }
     }
 }
