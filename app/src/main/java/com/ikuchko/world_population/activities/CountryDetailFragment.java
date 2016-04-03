@@ -7,16 +7,20 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.apapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
+import com.ikuchko.world_population.models.Indicator;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,6 +42,7 @@ public class CountryDetailFragment extends Fragment {
     @Bind(R.id.currenciesTextView) TextView currenciesTextView;
     @Bind(R.id.languagesTextView) TextView languagesTextView;
     @Bind(R.id.gdpPerCapitaTextView) TextView gdpPerCapitaTextView;
+    @Bind(R.id.inflationTextView) TextView inflationTextView;
     private Country country;
 
 
@@ -74,12 +79,29 @@ public class CountryDetailFragment extends Fragment {
         bordersTextView.setText(android.text.TextUtils.join(", ", country.getBorders()));
         currenciesTextView.setText(android.text.TextUtils.join(", ", country.getCurrencies()));
         languagesTextView.setText(android.text.TextUtils.join(", ", country.getLanguages()));
-        if (country.getGdpIndicators().size() > 0) {
-            String str = country.getGdpIndicators().get(0).getValue();
-            gdpPerCapitaTextView.setText(country.getGdpIndicators().get(0).getValue());
-        }
+        gdpPerCapitaTextView.setText(getIndicatorValue(MainActivity.INDICATOR_GDP));
+        inflationTextView.setText(getIndicatorValue(MainActivity.INDICATOR_INFLATION));
         MainActivity.loadingDialog.hide();
         return view;
+    }
+
+    private String getIndicatorValue (String indicatorId) {
+        ArrayList<Indicator> indicators = new ArrayList<>();
+        if (indicatorId.equals(MainActivity.INDICATOR_GDP)) {
+            indicators = country.getGdpIndicators();
+        } else if (indicatorId.equals(MainActivity.INDICATOR_INFLATION)) {
+            indicators = country.getInflationIndicators();
+        }
+        for (Indicator indicator : indicators) {
+            if (!(indicator.getValue().equals(""))) {
+                switch (indicatorId) {
+                    case MainActivity.INDICATOR_GDP : return "$" + indicator.getValue();
+                    case MainActivity.INDICATOR_INFLATION : return indicator.getValue() + " %";
+                }
+
+            }
+        }
+        return "";
     }
 
 }

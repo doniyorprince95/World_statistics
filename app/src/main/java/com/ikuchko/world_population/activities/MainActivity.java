@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                     CountriesService.processCountries(response);
                     getIndicators(INDICATOR_GDP);
-//                    getIndicators(INDICATOR_INFLATION);
+                    getIndicators(INDICATOR_INFLATION);
 
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
@@ -85,20 +85,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getIndicators (String indicator) {
-        for (Country country : Country.getCountryList()) {
-            final WorldBankService worldBankService = new WorldBankService(MainActivity.this, country.getAlpha2Code());
-            worldBankService.findIndicator(indicator, new Callback() {
+    private void getIndicators (final String indicator) {
+        for (final Country country : Country.getCountryList()) {
+            Runnable runnable = new Runnable() {
                 @Override
-                public void onFailure(Call call, IOException e) {
-                    e.printStackTrace();
-                }
+                public void run() {
+                    final WorldBankService worldBankService = new WorldBankService(MainActivity.this, country.getAlpha2Code());
+                    worldBankService.findIndicator(indicator, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            e.printStackTrace();
+                        }
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    WorldBankService.processIndicator(response);
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            WorldBankService.processIndicator(response);
+                        }
+                    });
                 }
-            });
+            };
+
+            Thread thread = new Thread(runnable);
+            thread.setName("indicatorRequest");
+            thread.start();
+
+
         }
     }
 

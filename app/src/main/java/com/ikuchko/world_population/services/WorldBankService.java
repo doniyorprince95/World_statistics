@@ -11,7 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,7 +39,7 @@ public class WorldBankService {
     }
 
     public void findIndicator (String indicator, Callback callback) {
-        String url = context.getString(R.string.worldBankURL) + countryCode + "/indicators/" + indicator + "?format=json&date=1995:2014";
+        String url = context.getString(R.string.worldBankURL) + countryCode + "/indicators/" + indicator + "?format=json&date=2000:2014";
 
         OkHttpClient client = new OkHttpClient.Builder().build();
         Request request = new Request.Builder().url(url).build();
@@ -54,9 +58,17 @@ public class WorldBankService {
                     JSONObject indicatorJSON = indicatorsJSON.getJSONObject("indicator");
                     String indicatorName = indicatorJSON.getString("value");
                     String indicatorId = indicatorJSON.getString("id");
-                    JSONObject coutryJSON = indicatorsJSON.getJSONObject("country");
-                    String countryCode = coutryJSON.getString("id");
-                    String value = indicatorsJSON.getString("value");
+                    JSONObject countryJSON = indicatorsJSON.getJSONObject("country");
+                    String countryCode = countryJSON.getString("id");
+                    String value;
+                    try {
+                        Double indicatorValue = indicatorsJSON.getDouble("value");
+                        DecimalFormat df = new DecimalFormat("#.##");
+                        df.setRoundingMode(RoundingMode.CEILING);
+                        value = df.format(indicatorValue);
+                    } catch (JSONException jsone) {
+                        value = "null";
+                    }
                     String date = indicatorsJSON.getString("date");
 
                     if (!(value.equals("null"))) {

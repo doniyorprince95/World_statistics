@@ -320,6 +320,30 @@
                             android:textDirection="firstStrong" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Inflation: "
+                            android:textColor="@color/colorPrimaryText" />
+
+                        <TextView
+                            tools:text="New Text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/inflationTextView"
+                            android:textColor="@color/colorSecondaryText"
+                            android:textDirection="firstStrong" />
+                    </LinearLayout>
+
                 </LinearLayout>
             </ScrollView>
         </RelativeLayout>
