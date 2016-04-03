@@ -27,6 +27,8 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+    public static final String INDICATOR_GDP = "NY.GDP.PCAP.CD";
+    public static final String INDICATOR_INFLATION = "FP.CPI.TOTL.ZG";
     TypedArray countriesStorage;
     Country country;
     ArrayList<Country> countryArrayTemp = new ArrayList<>();
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     CountriesService.processCountries(response);
+                    getIndicators(INDICATOR_GDP);
+//                    getIndicators(INDICATOR_INFLATION);
 
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
@@ -74,10 +78,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-                    String indicatorGDP = getResources().getString(R.string.indicatorGDP);
-                    for (Country country : Country.getCountryList()) {
-                        getIndicators(country.getAlpha2Code(), indicatorGDP);
-                    }
                 }
             });
         } else {
@@ -85,22 +85,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getIndicators (String countryCode, String indicator) {
-        final WorldBankService worldBankService = new WorldBankService(MainActivity.this, countryCode);
+    private void getIndicators (String indicator) {
+        for (Country country : Country.getCountryList()) {
+            final WorldBankService worldBankService = new WorldBankService(MainActivity.this, country.getAlpha2Code());
+            worldBankService.findIndicator(indicator, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
 
-        worldBankService.findIndicator(indicator, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                WorldBankService.processIndicator(response);
-            }
-        });
-
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    WorldBankService.processIndicator(response);
+                }
+            });
+        }
     }
+
 
     private void populateRecycleView() {
         adapter = new CountryListAdapter(Country.getCountryList(), getApplicationContext());

@@ -1,5 +1,7 @@
 package com.ikuchko.world_population.models;
 
+import com.ikuchko.world_population.activities.MainActivity;
+
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class Country {
     private ArrayList<String> languages;
     private String flagImage;
     ArrayList<Indicator> gdpIndicators = new ArrayList<>();
+    ArrayList<Indicator> inflationIndicators = new ArrayList<>();
     static ArrayList<Country> countryList = new ArrayList<>();
 
 
@@ -32,6 +35,10 @@ public class Country {
 
     public ArrayList<Indicator> getGdpIndicators() {
         return gdpIndicators;
+    }
+
+    public ArrayList<Indicator> getInflationIndicators() {
+        return inflationIndicators;
     }
 
     public Country(String name, String capital, String region, Integer population, Integer area, ArrayList<String> timezones, ArrayList<String> borders, String nativeName, String alpha2Code, String alpha3Code, ArrayList<String> currencies, ArrayList<String> languages) {
@@ -147,8 +154,13 @@ public class Country {
         return null;
     }
 
-    public void setIndicatorGDP(String indicatorName, String value, String date) {
-        gdpIndicators.add(new Indicator(indicatorName, value, date));
+    public void setIndicatorGDP(String indicatorId, String indicatorName, String value, String date) {
+        Indicator indicator = new Indicator(indicatorName, value, date);
+        if (indicatorId.equals(MainActivity.INDICATOR_GDP)) {
+            gdpIndicators.add(indicator);
+        } else if (indicatorId.equals(MainActivity.INDICATOR_INFLATION)) {
+            inflationIndicators.add(indicator);
+        }
     }
 
 

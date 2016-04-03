@@ -53,6 +53,7 @@ public class WorldBankService {
                     JSONObject indicatorsJSON = resultArayJSON.getJSONObject(i);
                     JSONObject indicatorJSON = indicatorsJSON.getJSONObject("indicator");
                     String indicatorName = indicatorJSON.getString("value");
+                    String indicatorId = indicatorJSON.getString("id");
                     JSONObject coutryJSON = indicatorsJSON.getJSONObject("country");
                     String countryCode = coutryJSON.getString("id");
                     String value = indicatorsJSON.getString("value");
@@ -61,7 +62,7 @@ public class WorldBankService {
                     if (!(value.equals("null"))) {
                         Country country = Country.getCountryByCode(countryCode);
                         if (country != null) {
-                            country.setIndicatorGDP(indicatorName, value, date);
+                            country.setIndicatorGDP(indicatorId, indicatorName, value, date);
                         }
                     }
 
