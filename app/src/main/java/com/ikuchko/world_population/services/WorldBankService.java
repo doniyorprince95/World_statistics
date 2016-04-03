@@ -34,8 +34,8 @@ public class WorldBankService {
         this.countryCode = countryCode;
     }
 
-    public void findIndicator (Callback callback) {
-        String url = context.getString(R.string.worldBankURL) + countryCode + GDP_INDICATOR + "?format=json&date=1995:2014";
+    public void findIndicator (String indicator, Callback callback) {
+        String url = context.getString(R.string.worldBankURL) + countryCode + "/indicators/" + indicator + "?format=json&date=1995:2014";
 
         OkHttpClient client = new OkHttpClient.Builder().build();
         Request request = new Request.Builder().url(url).build();
@@ -58,9 +58,11 @@ public class WorldBankService {
                     String value = indicatorsJSON.getString("value");
                     String date = indicatorsJSON.getString("date");
 
-                    Country country = Country.getCountryByCode(countryCode);
-                    if (country != null) {
-                        country.setIndicatorGDP(indicatorName, value, date);
+                    if (!(value.equals("null"))) {
+                        Country country = Country.getCountryByCode(countryCode);
+                        if (country != null) {
+                            country.setIndicatorGDP(indicatorName, value, date);
+                        }
                     }
 
                     Log.d(TAG, countryCode+" | "+indicatorName+" | "+value+" | "+date);

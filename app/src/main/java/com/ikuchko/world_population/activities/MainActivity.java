@@ -73,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
                             populateRecycleView();
                         }
                     });
+
+                    String indicatorGDP = getResources().getString(R.string.indicatorGDP);
                     for (Country country : Country.getCountryList()) {
-                        getIndicators(country.getAlpha2Code());
+                        getIndicators(country.getAlpha2Code(), indicatorGDP);
                     }
                 }
             });
@@ -83,10 +85,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getIndicators (String countryCode) {
+    private void getIndicators (String countryCode, String indicator) {
         final WorldBankService worldBankService = new WorldBankService(MainActivity.this, countryCode);
 
-        worldBankService.findIndicator(new Callback() {
+        worldBankService.findIndicator(indicator, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
