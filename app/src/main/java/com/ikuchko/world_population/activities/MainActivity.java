@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,6 +22,8 @@ import com.ikuchko.world_population.services.CountriesService;
 import com.ikuchko.world_population.services.WorldBankService;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,10 +36,10 @@ public class MainActivity extends FirebaseLoginBaseActivity {
     public static final String INDICATOR_GDP = "NY.GDP.PCAP.CD";
     public static final String INDICATOR_INFLATION = "FP.CPI.TOTL.ZG";
     private CountryListAdapter adapter;
+    private MenuItem signOption;
     public static ProgressDialog loadingDialog;
 
     @Bind(R.id.countryRecyclerView) RecyclerView countryRecyclerView;
-    @Bind(R.id.signOption) MenuItem signOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +72,8 @@ public class MainActivity extends FirebaseLoginBaseActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     CountriesService.processCountries(response);
-                    getIndicators(INDICATOR_GDP);
-                    getIndicators(INDICATOR_INFLATION);
+//                    getIndicators(INDICATOR_GDP);
+//                    getIndicators(INDICATOR_INFLATION);
 
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
@@ -109,8 +112,6 @@ public class MainActivity extends FirebaseLoginBaseActivity {
             Thread thread = new Thread(runnable);
             thread.setName("indicatorRequest");
             thread.start();
-
-
         }
     }
 
@@ -128,12 +129,20 @@ public class MainActivity extends FirebaseLoginBaseActivity {
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        if (getFirebaseRef().getAuth() != null) {
-            signOption.setTitle("sign out");
-        } else {
-            signOption.setTitle("sign in");
-        }
+        signOption = menu.findItem(R.id.signOption);
+        menuBuilder();
         return true;
+    }
+
+    private void menuBuilder() {
+        if (signOption != null) {
+            if (getFirebaseRef().getAuth() != null) {
+                signOption.setTitle("sign out");
+                Log.d(TAG, getFirebaseRef().getAuth().getToken().toString());
+            } else {
+                signOption.setTitle("sign in");
+            }
+        }
     }
 
     //Determine if actionBar item was selected. If true then do corresponding actions
@@ -142,8 +151,18 @@ public class MainActivity extends FirebaseLoginBaseActivity {
         switch (item.getItemId()) {
 
             case R.id.signOption:
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                showFirebaseLoginPrompt();
+                if (getFirebaseRef().getAuth() == null) {
+                    showFirebaseLoginPrompt();
+                } else {
+
+//                    To logout from each Provider use logout();
+//                    To keep connection with Provider, but unAuthorized form Firebase
+//                    use ref.unauth();
+
+                    logout();
+//                    getFirebaseRef().unauth();
+                }
+//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
 //                startActivity(intent);
                 return true;
         }
@@ -174,11 +193,16 @@ public class MainActivity extends FirebaseLoginBaseActivity {
 
     @Override
     protected void onFirebaseLoggedIn(AuthData authData) {
-//        TODO: Handle successful login
+        menuBuilder();
+        Map<String, Object> providerData = authData.getProviderData();
+        String url =((Map) ((Map) ((Map) providerData.get("cachedUserProfile")).get("picture")).get("data")).get("url").toString();
+        Log.d(TAG, url);
     }
 
     @Override
     protected void onFirebaseLoggedOut() {
-//        TODO: Handle logout
+        menuBuilder();
     }
+
+
 }
