@@ -31,7 +31,7 @@ public class CountriesService {
     }
 
     public void findCountries (Callback callback) {
-        final String URL = context.getString(R.string.countryURL);
+        final String URL = context.getString(R.string.country_url);
 
         OkHttpClient client = new OkHttpClient.Builder().build();
 

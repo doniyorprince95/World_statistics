@@ -2,22 +2,25 @@ package com.ikuchko.world_population.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.ui.auth.core.AuthProviderType;
+import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
+import com.firebase.ui.auth.core.FirebaseLoginError;
 import com.ikuchko.world_population.R;
+import com.ikuchko.world_population.WorldPopulationApplication;
 import com.ikuchko.world_population.apapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.services.CountriesService;
 import com.ikuchko.world_population.services.WorldBankService;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,17 +28,15 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FirebaseLoginBaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final String INDICATOR_GDP = "NY.GDP.PCAP.CD";
     public static final String INDICATOR_INFLATION = "FP.CPI.TOTL.ZG";
-    TypedArray countriesStorage;
-    Country country;
-    ArrayList<Country> countryArrayTemp = new ArrayList<>();
     private CountryListAdapter adapter;
     public static ProgressDialog loadingDialog;
 
     @Bind(R.id.countryRecyclerView) RecyclerView countryRecyclerView;
+    @Bind(R.id.signOption) MenuItem signOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        if (getFirebaseRef().getAuth() != null) {
+            signOption.setTitle("sign out");
+        } else {
+            signOption.setTitle("sign in");
+        }
         return true;
     }
 
@@ -135,11 +141,44 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.signin:
+            case R.id.signOption:
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                showFirebaseLoginPrompt();
+//                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected Firebase getFirebaseRef() {
+        return WorldPopulationApplication.getAppInstance().getFirebaseRef();
+    }
+
+    @Override
+    protected void onFirebaseLoginProviderError(FirebaseLoginError firebaseLoginError) {
+
+    }
+
+    @Override
+    protected void onFirebaseLoginUserError(FirebaseLoginError firebaseLoginError) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setEnabledAuthProvider(AuthProviderType.PASSWORD);
+        setEnabledAuthProvider(AuthProviderType.FACEBOOK);
+    }
+
+    @Override
+    protected void onFirebaseLoggedIn(AuthData authData) {
+//        TODO: Handle successful login
+    }
+
+    @Override
+    protected void onFirebaseLoggedOut() {
+//        TODO: Handle logout
     }
 }

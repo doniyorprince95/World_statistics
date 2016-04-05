@@ -7,7 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.ui.auth.core.AuthProviderType;
+import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
+import com.firebase.ui.auth.core.FirebaseLoginError;
 import com.ikuchko.world_population.R;
+import com.ikuchko.world_population.WorldPopulationApplication;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,7 +29,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
         submitButton.setOnClickListener(this);
     }
 

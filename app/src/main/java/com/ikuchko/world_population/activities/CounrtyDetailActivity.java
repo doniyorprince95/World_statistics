@@ -11,7 +11,6 @@ import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.apapters.CountryPagerAdapter;
 import com.ikuchko.world_population.models.Country;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class CounrtyDetailActivity extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_TEXT, currentCountry.getShareContent());
                 intent.setType("text/plain");
                 if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent.createChooser(intent, getResources().getString(R.string.intentTitle)));
+                    startActivity(intent.createChooser(intent, getResources().getString(R.string.intent_title)));
                 }
                 return true;
         }

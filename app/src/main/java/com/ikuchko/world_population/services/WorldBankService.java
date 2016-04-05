@@ -13,13 +13,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -39,7 +35,7 @@ public class WorldBankService {
     }
 
     public void findIndicator (String indicator, Callback callback) {
-        String url = context.getString(R.string.worldBankURL) + countryCode + "/indicators/" + indicator + "?format=json&date=2000:2014";
+        String url = context.getString(R.string.worldBank_url) + countryCode + "/indicators/" + indicator + "?format=json&date=2000:2014";
 
         OkHttpClient client = new OkHttpClient.Builder().build();
         Request request = new Request.Builder().url(url).build();
