@@ -1,5 +1,6 @@
 package com.ikuchko.world_population.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ikuchko.world_population.activities.MainActivity;
 
 import org.parceler.Parcel;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
  * Created by iliak on 3/20/16.
  */
 @Parcel
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Country {
     private String name;
     private String capital;
@@ -163,5 +165,13 @@ public class Country {
         }
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Country) {
+            Country country = (Country) o;
+            return (country.getName().equals(this.getName())) &&
+                    (country.getCapital().equals(this.getCapital()));
+        }
+        return false;
+    }
 }

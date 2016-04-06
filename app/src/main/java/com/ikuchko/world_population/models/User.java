@@ -62,6 +62,15 @@ public class User {
         visitedCountries.add(country);
     }
 
+    public Boolean isCountryVisited(Country country) {
+        for (int i=0; i<visitedCountries.size(); i++) {
+            if (country.equals(visitedCountries.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void destroy() {
         user = null;
     }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -16,6 +17,7 @@ import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.WorldPopulationApplication;
 import com.ikuchko.world_population.apapters.CountryPagerAdapter;
 import com.ikuchko.world_population.models.Country;
+import com.ikuchko.world_population.models.User;
 
 import org.parceler.Parcels;
 
@@ -34,7 +36,6 @@ public class CounrtyDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counrty_detail);
         ButterKnife.bind(this);
-
         countries = Parcels.unwrap(getIntent().getParcelableExtra("country"));
         int startPosition = Integer.parseInt(getIntent().getStringExtra("position"));
         adapter = new CountryPagerAdapter(getSupportFragmentManager(), countries);
@@ -47,21 +48,9 @@ public class CounrtyDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu (Menu menu) {
         getMenuInflater().inflate(R.menu.country_detail_menu, menu);
         final MenuItem visited = menu.findItem(R.id.visited);
-        Firebase ref = new Firebase(getResources().getString(R.id.));
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                visited.setTitle("Visited: "+dataSnapshot.getChildrenCount());
-                for (DataSnapshot countries : dataSnapshot.getChildren()) {
-
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
+        if (User.getUser() != null) {
+            getVisitedCountries(visited);
+        }
         return true;
     }
 
@@ -82,5 +71,20 @@ public class CounrtyDetailActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getVisitedCountries(final MenuItem item) {
+        Firebase ref = new Firebase(getResources().getString(R.string.firebase_url) + "/visited_countries/" +User.getUser().getuId());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                item.setTitle("Visited: " + dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 }

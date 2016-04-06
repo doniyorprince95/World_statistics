@@ -10,7 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.firebase.ui.auth.core.AuthProviderType;
 import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
 import com.firebase.ui.auth.core.FirebaseLoginError;
@@ -202,6 +205,7 @@ public class MainActivity extends FirebaseLoginBaseActivity {
         new User(authData.getUid());
         User.getUser().setName(userName);
         User.getUser().setProfileUrl(profileUrl);
+        getVisitedCountries();
 
         Log.d(TAG, User.getUser().getName());
         Log.d(TAG, User.getUser().getProfileUrl());
@@ -213,5 +217,22 @@ public class MainActivity extends FirebaseLoginBaseActivity {
         User.destroy();
     }
 
+    public void getVisitedCountries() {
+        Firebase ref = new Firebase(getResources().getString(R.string.firebase_url) + "/visited_countries/" +User.getUser().getuId());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot countrySnapshot : dataSnapshot.getChildren()) {
+                    Country country = countrySnapshot.getValue(Country.class);
+                    User.getUser().addCountry(country);
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
 
 }

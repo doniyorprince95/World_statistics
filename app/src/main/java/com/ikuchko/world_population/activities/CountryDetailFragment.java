@@ -24,6 +24,8 @@ import org.parceler.Parcels;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -86,6 +88,7 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
         languagesTextView.setText(android.text.TextUtils.join(", ", country.getLanguages()));
         gdpPerCapitaTextView.setText(getIndicatorValue(MainActivity.INDICATOR_GDP));
         inflationTextView.setText(getIndicatorValue(MainActivity.INDICATOR_INFLATION));
+        changeVisitedButton();
         MainActivity.loadingDialog.hide();
         return view;
     }
@@ -119,6 +122,15 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
     }
 
     private void changeVisitedButton() {
-
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        User user = User.getUser();
+        if (user != null) {
+            if (user.isCountryVisited(country)) {
+                map.put("star", android.R.drawable.btn_star_big_on);
+            } else {
+                map.put("star", android.R.drawable.btn_star_big_off);
+            }
+            visitedButton.setImageResource(map.get("star"));
+        }
     }
 }
