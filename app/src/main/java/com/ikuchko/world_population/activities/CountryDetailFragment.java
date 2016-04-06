@@ -2,6 +2,7 @@ package com.ikuchko.world_population.activities;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,9 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ikuchko.world_population.R;
+import com.ikuchko.world_population.WorldPopulationApplication;
 import com.ikuchko.world_population.apapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.models.Indicator;
+import com.ikuchko.world_population.models.User;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -28,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CountryDetailFragment extends Fragment {
+public class CountryDetailFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.countryTextView) TextView countryTextView;
     @Bind(R.id.flagImageView) ImageView flagImageView;
     @Bind(R.id.capitalTextView) TextView capitalTextView;
@@ -43,6 +46,7 @@ public class CountryDetailFragment extends Fragment {
     @Bind(R.id.languagesTextView) TextView languagesTextView;
     @Bind(R.id.gdpPerCapitaTextView) TextView gdpPerCapitaTextView;
     @Bind(R.id.inflationTextView) TextView inflationTextView;
+    @Bind(R.id.visitedButton) FloatingActionButton visitedButton;
     private Country country;
 
 
@@ -67,6 +71,7 @@ public class CountryDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_country_detail, container, false);
         ButterKnife.bind(this, view);
 
+        visitedButton.setOnClickListener(this);
         Picasso.with(view.getContext()).load(country.getFlagImage()).resize(300, 156).centerCrop().into(flagImageView);
         countryTextView.setText(country.getName());
         capitalTextView.setText(country.getCapital());
@@ -104,4 +109,16 @@ public class CountryDetailFragment extends Fragment {
         return "";
     }
 
+    @Override
+    public void onClick(View v) {
+        WorldPopulationApplication.getAppInstance().getFirebaseRef()
+                .child("visited_countries/"+ User.getUser().getuId())
+                .push().setValue(country);
+        User.getUser().addCountry(country);
+        changeVisitedButton();
+    }
+
+    private void changeVisitedButton() {
+
+    }
 }

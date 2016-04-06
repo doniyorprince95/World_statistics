@@ -28,6 +28,7 @@ dependencies {
     apt 'org.parceler:parceler:1.0.4'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+
     compile 'org.parceler:parceler-api:1.0.4'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
@@ -41,5 +42,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:8.3.0'
     compile 'org.twitter4j:twitter4j-core:4.0.2'
     compile 'com.firebase:firebase-client-android:2.3.1'
-
+    compile 'com.android.support:design:23.2.1'
 }

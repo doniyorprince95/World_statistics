@@ -6,4 +6,8 @@
         app:showAsAction="always"
         android:id="@+id/share"
         android:icon="@drawable/ic_save_white_36dp"/>
+    <item
+        android:title="Visited:"
+        app:showAsAction="always"
+        android:id="@+id/visited" />
 </menu>

@@ -344,8 +344,18 @@
                             android:textDirection="firstStrong" />
                     </LinearLayout>
 
+
                 </LinearLayout>
             </ScrollView>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/visitedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="@dimen/fab_margin"
+                android:src="@android:drawable/btn_star_big_off"
+                android:layout_alignRight="@+id/scrollView"
+                android:layout_alignBottom="@+id/scrollView" />
         </RelativeLayout>
 
 

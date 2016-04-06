@@ -1,13 +1,19 @@
 package com.ikuchko.world_population.activities;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.ikuchko.world_population.R;
+import com.ikuchko.world_population.WorldPopulationApplication;
 import com.ikuchko.world_population.apapters.CountryPagerAdapter;
 import com.ikuchko.world_population.models.Country;
 
@@ -40,6 +46,22 @@ public class CounrtyDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
         getMenuInflater().inflate(R.menu.country_detail_menu, menu);
+        final MenuItem visited = menu.findItem(R.id.visited);
+        Firebase ref = new Firebase(getResources().getString(R.id.));
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                visited.setTitle("Visited: "+dataSnapshot.getChildrenCount());
+                for (DataSnapshot countries : dataSnapshot.getChildren()) {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
         return true;
     }
 

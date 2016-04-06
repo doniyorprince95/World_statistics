@@ -18,6 +18,7 @@ import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.WorldPopulationApplication;
 import com.ikuchko.world_population.apapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
+import com.ikuchko.world_population.models.User;
 import com.ikuchko.world_population.services.CountriesService;
 import com.ikuchko.world_population.services.WorldBankService;
 
@@ -134,17 +135,6 @@ public class MainActivity extends FirebaseLoginBaseActivity {
         return true;
     }
 
-    private void menuBuilder() {
-        if (signOption != null) {
-            if (getFirebaseRef().getAuth() != null) {
-                signOption.setTitle("sign out");
-                Log.d(TAG, getFirebaseRef().getAuth().getToken().toString());
-            } else {
-                signOption.setTitle("sign in");
-            }
-        }
-    }
-
     //Determine if actionBar item was selected. If true then do corresponding actions
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -167,6 +157,17 @@ public class MainActivity extends FirebaseLoginBaseActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void menuBuilder() {
+        if (signOption != null) {
+            if (getFirebaseRef().getAuth() != null) {
+                signOption.setTitle("sign out");
+            } else {
+                signOption.setTitle("sign in");
+
+            }
+        }
     }
 
     @Override
@@ -194,14 +195,22 @@ public class MainActivity extends FirebaseLoginBaseActivity {
     @Override
     protected void onFirebaseLoggedIn(AuthData authData) {
         menuBuilder();
+
         Map<String, Object> providerData = authData.getProviderData();
-        String url =((Map) ((Map) ((Map) providerData.get("cachedUserProfile")).get("picture")).get("data")).get("url").toString();
-        Log.d(TAG, url);
+        String userName = providerData.get("displayName").toString();
+        String profileUrl = providerData.get("profileImageURL").toString();
+        new User(authData.getUid());
+        User.getUser().setName(userName);
+        User.getUser().setProfileUrl(profileUrl);
+
+        Log.d(TAG, User.getUser().getName());
+        Log.d(TAG, User.getUser().getProfileUrl());
     }
 
     @Override
     protected void onFirebaseLoggedOut() {
         menuBuilder();
+        User.destroy();
     }
 
 
