@@ -13,6 +13,11 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.WorldPopulationApplication;
 import com.ikuchko.world_population.apapters.CountryPagerAdapter;
@@ -26,7 +31,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CounrtyDetailActivity extends AppCompatActivity {
+// TODO: implement verification of google services version before loading the map (isGooglePlayServicesAvailable())
+
+public class CounrtyDetailActivity extends AppCompatActivity implements OnMapReadyCallback{
     @Bind(R.id.viewPager) ViewPager mViewPager;
     private ArrayList<Country> countries = new ArrayList<>();
     private CountryPagerAdapter adapter;
@@ -36,6 +43,8 @@ public class CounrtyDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counrty_detail);
         ButterKnife.bind(this);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
         countries = Parcels.unwrap(getIntent().getParcelableExtra("country"));
         int startPosition = Integer.parseInt(getIntent().getStringExtra("position"));
         adapter = new CountryPagerAdapter(getSupportFragmentManager(), countries);
@@ -86,5 +95,12 @@ public class CounrtyDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(0, 0))
+                .title("Marker"));
     }
 }

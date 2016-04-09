@@ -7,9 +7,9 @@ import org.parceler.Parcel;
  */
 @Parcel
 public class Indicator {
-    private String indicatorName;
-    private String value;
-    private String date;
+    String indicatorName;
+    String value;
+    String date;
 
     public Indicator() {
 

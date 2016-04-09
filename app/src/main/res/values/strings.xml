@@ -2,9 +2,11 @@
     <string name="app_name">World_population</string>
     <string name="signin">Sing in</string>
 
+    <!--API URLs-->
     <string name="firebase_url">https://world-statistics.firebaseio.com/</string>
     <string name="country_url">https://restcountries.eu/rest/v1/all</string>
     <string name="worldBank_url">http://api.worldbank.org/countries/</string>
+
 
     <!--social auth API ID-->
     <string name="facebook_app_id">207286549644758</string>

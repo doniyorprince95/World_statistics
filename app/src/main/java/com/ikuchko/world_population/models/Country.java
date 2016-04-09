@@ -13,19 +13,19 @@ import java.util.ArrayList;
 @Parcel
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Country {
-    private String name;
-    private String capital;
-    private String region;
-    private Integer population;
-    private Integer area;
-    private ArrayList<String> timezones;
-    private ArrayList<String> borders;
-    private String nativeName;
-    private String alpha2Code;
-    private String alpha3Code;
-    private ArrayList<String> currencies;
-    private ArrayList<String> languages;
-    private String flagImage;
+    String name;
+    String capital;
+    String region;
+    Integer population;
+    Integer area;
+    ArrayList<String> timezones;
+    ArrayList<String> borders;
+    String nativeName;
+    String alpha2Code;
+    String alpha3Code;
+    ArrayList<String> currencies;
+    ArrayList<String> languages;
+    String flagImage;
     ArrayList<Indicator> gdpIndicators = new ArrayList<>();
     ArrayList<Indicator> inflationIndicators = new ArrayList<>();
     static ArrayList<Country> countryList = new ArrayList<>();
