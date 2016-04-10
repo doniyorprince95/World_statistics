@@ -46,7 +46,7 @@ public class CounrtyDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
         getMenuInflater().inflate(R.menu.country_detail_menu, menu);
-        final MenuItem visited = menu.findItem(R.id.visited);
+        final MenuItem visited = menu.findItem(R.id.favorite);
         if (User.getUser() != null) {
             getVisitedCountries(visited);
         }
@@ -60,14 +60,19 @@ public class CounrtyDetailActivity extends AppCompatActivity {
 
             case R.id.share:
                 Country currentCountry = countries.get(mViewPager.getCurrentItem());
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, currentCountry.getShareContent());
-                intent.setType("text/plain");
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent.createChooser(intent, getResources().getString(R.string.intent_title)));
+                Intent impIntent = new Intent();
+                impIntent.setAction(Intent.ACTION_SEND);
+                impIntent.putExtra(Intent.EXTRA_TEXT, currentCountry.getShareContent());
+                impIntent.setType("text/plain");
+                if (impIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(impIntent.createChooser(impIntent, getResources().getString(R.string.intent_title)));
                 }
                 return true;
+
+            case R.id.favorite:
+                Intent favoriteIntent = new Intent(CounrtyDetailActivity.this, WishListActivity.class);
+                startActivity(favoriteIntent);
+                return  true;
         }
         return super.onOptionsItemSelected(item);
     }
