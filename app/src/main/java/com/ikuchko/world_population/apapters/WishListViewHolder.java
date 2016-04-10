@@ -1,6 +1,7 @@
 package com.ikuchko.world_population.apapters;
 
 import android.content.Context;
+import android.support.annotation.BinderThread;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,12 +21,13 @@ import butterknife.ButterKnife;
  */
 public class WishlistViewHolder extends RecyclerView.ViewHolder {
 
-    private final Context context;
-    private final ArrayList<Country> countryList;
+    private Context context;
+    private ArrayList<Country> countryList;
     @Bind(R.id.flagView) ImageView flagView;
     @Bind(R.id.countryName) TextView countryName;
-    @Bind(R.id.population) TextView population;
+    @Bind(R.id.population) TextView populationLabel;
     @Bind(R.id.capital) TextView capital;
+//    @Bind(R.id.countryTextView) TextView countryName;
 
     public WishlistViewHolder(View itemView, ArrayList<Country> countries) {
         super(itemView);
@@ -37,7 +39,7 @@ public class WishlistViewHolder extends RecyclerView.ViewHolder {
     public void bindCountry (Country country) {
         Picasso.with(context).load(country.getFlagImage()).resize(300, 156).centerCrop().into(flagView);
         countryName.setText(country.getName());
-        population.setText(country.getPopulation());
+        populationLabel.setText(country.getPopulation().toString());
         capital.setText(country.getCapital());
     }
 }

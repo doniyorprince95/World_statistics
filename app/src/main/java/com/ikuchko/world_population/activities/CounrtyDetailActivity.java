@@ -1,7 +1,6 @@
 package com.ikuchko.world_population.activities;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,6 +48,9 @@ public class CounrtyDetailActivity extends AppCompatActivity {
         final MenuItem visited = menu.findItem(R.id.favorite);
         if (User.getUser() != null) {
             getVisitedCountries(visited);
+        } else {
+            visited.setVisible(false);
+            this.invalidateOptionsMenu();
         }
         return true;
     }
@@ -70,7 +72,7 @@ public class CounrtyDetailActivity extends AppCompatActivity {
                 return true;
 
             case R.id.favorite:
-                Intent favoriteIntent = new Intent(CounrtyDetailActivity.this, WishListActivity.class);
+                Intent favoriteIntent = new Intent(CounrtyDetailActivity.this, WishlistActivity.class);
                 startActivity(favoriteIntent);
                 return  true;
         }
@@ -78,11 +80,11 @@ public class CounrtyDetailActivity extends AppCompatActivity {
     }
 
     public void getVisitedCountries(final MenuItem item) {
-        Firebase ref = new Firebase(getResources().getString(R.string.firebase_url) + "/visited_countries/" +User.getUser().getuId());
+        Firebase ref = new Firebase(getResources().getString(R.string.firebase_url) + "/favorite_countries/" +User.getUser().getuId());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                item.setTitle("Visited: " + dataSnapshot.getChildrenCount());
+                item.setTitle("Favorite: " + dataSnapshot.getChildrenCount());
             }
 
             @Override

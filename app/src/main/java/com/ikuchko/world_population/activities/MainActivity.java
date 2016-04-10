@@ -216,7 +216,7 @@ public class MainActivity extends FirebaseLoginBaseActivity {
     }
 
     public void getVisitedCountries() {
-        Firebase ref = new Firebase(getResources().getString(R.string.firebase_url) + "/visited_countries/" +User.getUser().getuId());
+        Firebase ref = new Firebase(getResources().getString(R.string.firebase_url) + "/favorite_countries/" +User.getUser().getuId());
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

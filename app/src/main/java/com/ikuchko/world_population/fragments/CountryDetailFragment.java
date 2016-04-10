@@ -1,4 +1,4 @@
-package com.ikuchko.world_population.activities;
+package com.ikuchko.world_population.fragments;
 
 
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.WorldPopulationApplication;
+import com.ikuchko.world_population.activities.MainActivity;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.models.Indicator;
 import com.ikuchko.world_population.models.User;
@@ -110,14 +111,18 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (!User.getUser().isCountryVisited(country)) {
-            WorldPopulationApplication.getAppInstance().getFirebaseRef()
-                    .child("visited_countries/" + User.getUser().getuId())
-                    .push().setValue(country);
-            User.getUser().addCountry(country);
-            changeVisitedButton();
+        if (User.getUser() == null) {
+            Toast.makeText(v.getContext(), "You need to be loged in", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(v.getContext(), country.getName() + " have been already added to your wishlist.", Toast.LENGTH_SHORT).show();
+            if (!User.getUser().isCountryVisited(country)) {
+                WorldPopulationApplication.getAppInstance().getFirebaseRef()
+                        .child("favorite_countries/" + User.getUser().getuId())
+                        .push().setValue(country);
+                User.getUser().addCountry(country);
+                changeVisitedButton();
+            } else {
+                Toast.makeText(v.getContext(), country.getName() + " have been already added to your wishlist.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

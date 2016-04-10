@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ikuchko.world_population.activities.CountryDetailFragment;
+import com.ikuchko.world_population.fragments.CountryDetailFragment;
 import com.ikuchko.world_population.models.Country;
 
 import java.util.ArrayList;
