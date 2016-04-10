@@ -76,8 +76,8 @@ public class MainActivity extends FirebaseLoginBaseActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     CountriesService.processCountries(response);
-                    getIndicators(INDICATOR_GDP);
-                    getIndicators(INDICATOR_INFLATION);
+//                    getIndicators(INDICATOR_GDP);
+//                    getIndicators(INDICATOR_INFLATION);
 
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.WorldPopulationApplication;
 import com.ikuchko.world_population.apapters.CountryListAdapter;
@@ -113,11 +115,15 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        WorldPopulationApplication.getAppInstance().getFirebaseRef()
-                .child("visited_countries/"+ User.getUser().getuId())
-                .push().setValue(country);
-        User.getUser().addCountry(country);
-        changeVisitedButton();
+        if (!User.getUser().isCountryVisited(country)) {
+            WorldPopulationApplication.getAppInstance().getFirebaseRef()
+                    .child("visited_countries/" + User.getUser().getuId())
+                    .push().setValue(country);
+            User.getUser().addCountry(country);
+            changeVisitedButton();
+        } else {
+            Toast.makeText(v.getContext(), country.getName() + " have been already added to your wishlist.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void changeVisitedButton() {
