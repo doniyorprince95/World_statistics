@@ -1,6 +1,5 @@
 package com.ikuchko.world_population.apapters;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,7 +38,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
 
     @Override
     public CountryListAdapter.CountryViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
-        View view =LayoutInflater.from(parent.getContext()).inflate(R.layout.country_tile, parent, false);
+        View view =LayoutInflater.from(parent.getContext()).inflate(R.layout.country_list_item, parent, false);
         CountryViewHolder viewHolder = new CountryViewHolder (view);
         return viewHolder;
     }

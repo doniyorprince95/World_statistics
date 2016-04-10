@@ -18,22 +18,16 @@ import com.ikuchko.world_population.WorldPopulationApplication;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class WishListActivity extends AppCompatActivity implements View.OnClickListener {
-    @Bind(R.id.submitButton) Button submitButton;
-    @Bind(R.id.nameEditText) EditText nameEditText;
-    @Bind(R.id.dateEditText) EditText dateEditText;
+public class WishListActivity extends AppCompatActivity {
 
+    @Bind(R.id.submitButton) Button submitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        submitButton.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick (View v) {
 
     }
+
 }
