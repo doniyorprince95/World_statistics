@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.WorldPopulationApplication;
 import com.ikuchko.world_population.activities.MainActivity;
@@ -115,9 +116,11 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
             Toast.makeText(v.getContext(), "You need to be loged in", Toast.LENGTH_SHORT).show();
         } else {
             if (!User.getUser().isCountryVisited(country)) {
-                WorldPopulationApplication.getAppInstance().getFirebaseRef()
+                Firebase countryToSave =  WorldPopulationApplication.getAppInstance().getFirebaseRef()
                         .child("favorite_countries/" + User.getUser().getuId())
-                        .push().setValue(country);
+                        .push();
+                country.setCountryUId(countryToSave.getKey().toString());
+                countryToSave.setValue(country);
                 User.getUser().addCountry(country);
                 changeVisitedButton();
             } else {

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:background="@color/colorIconsTransparent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:src="@drawable/ukraine"
+                android:id="@+id/flagView" />
+
+            <ImageView
+                android:id="@+id/dragIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignLeft="@id/flagView"
+                android:layout_alignBottom="@id/flagView"
+                android:gravity="bottom|left"
+                android:src="@drawable/ic_reorder_white_36dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Ukraine"
+                android:id="@+id/countryName"
+                android:textSize="25sp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorSecondaryText"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/countryName"
+                android:id="@+id/capitalLinearLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/capitalTitle"
+                    android:text="Capital: "
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:layout_weight="0"
+                    android:layout_below="@+id/countryName" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="AsDA"
+                    android:id="@+id/capital"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimaryText"
+                    android:layout_below="@id/countryName"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/capitalLinearLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Population: "
+                    android:layout_weight="0"
+                    android:id="@+id/populationTitle"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimaryText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="45897525"
+                    android:id="@+id/population"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimaryText" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

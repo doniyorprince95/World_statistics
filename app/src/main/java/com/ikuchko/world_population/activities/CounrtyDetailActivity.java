@@ -1,6 +1,9 @@
 package com.ikuchko.world_population.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.annotation.ColorRes;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.apapters.CountryPagerAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.models.User;
+import com.ikuchko.world_population.util.ScaleAndFadePageTransformer;
 
 import org.parceler.Parcels;
 
@@ -25,7 +29,7 @@ import butterknife.ButterKnife;
 
 
 public class CounrtyDetailActivity extends AppCompatActivity {
-    @Bind(R.id.viewPager) ViewPager mViewPager;
+    @Bind(R.id.viewPager) ViewPager viewPager;
     private ArrayList<Country> countries = new ArrayList<>();
     private CountryPagerAdapter adapter;
 
@@ -37,8 +41,11 @@ public class CounrtyDetailActivity extends AppCompatActivity {
         countries = Parcels.unwrap(getIntent().getParcelableExtra("country"));
         int startPosition = Integer.parseInt(getIntent().getStringExtra("position"));
         adapter = new CountryPagerAdapter(getSupportFragmentManager(), countries);
-        mViewPager.setAdapter(adapter);
-        mViewPager.setCurrentItem(startPosition);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(startPosition);
+        viewPager.setPageTransformer(true, new ScaleAndFadePageTransformer());
+        PagerTabStrip pagerTabStrip = (PagerTabStrip) findViewById(R.id.pagerHeader);
+        pagerTabStrip.setTabIndicatorColor(Color.GRAY);
     }
 
     //inflate the menu
@@ -61,7 +68,7 @@ public class CounrtyDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.share:
-                Country currentCountry = countries.get(mViewPager.getCurrentItem());
+                Country currentCountry = countries.get(viewPager.getCurrentItem());
                 Intent impIntent = new Intent();
                 impIntent.setAction(Intent.ACTION_SEND);
                 impIntent.putExtra(Intent.EXTRA_TEXT, currentCountry.getShareContent());

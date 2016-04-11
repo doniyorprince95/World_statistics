@@ -9,5 +9,6 @@
     <color name="colorSecondaryText">#d8d8d8</color>
     <color name="colorIcons">#212121</color>
     <color name="colorIconsTransparent">#99212121</color>
+    <color name="colorIconsTransparent70">#CC212121</color>
     <color name="colorDivider">#B6B6B6</color>
 </resources>

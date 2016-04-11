@@ -1,5 +1,7 @@
 package com.ikuchko.world_population.models;
 
+import android.support.annotation.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ikuchko.world_population.activities.MainActivity;
 
@@ -13,13 +15,15 @@ import java.util.ArrayList;
 @Parcel
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Country {
+    String countryUId;
+    String index;
     String name;
     String capital;
     String region;
     Integer population;
     Integer area;
-    ArrayList<String> timezones;
-    ArrayList<String> borders;
+    @Nullable ArrayList<String> timezones;
+    @Nullable ArrayList<String> borders;
     String nativeName;
     String alpha2Code;
     String alpha3Code;
@@ -58,7 +62,17 @@ public class Country {
         this.languages = languages;
         this.flagImage = "http://www.geonames.org/flags/x/" + alpha2Code.toLowerCase() + ".gif";
         this.countryList.add(this);
+        this.index = "not_specified";
     }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public String getCountryUId() {
+        return countryUId;
+    }
+
 
     public String getFlagImage() {
         return flagImage;
@@ -89,22 +103,25 @@ public class Country {
     }
 
     public ArrayList<String> getBorders() {
-        if (borders.size() > 0) {
-            int count = 0;
-            outerloop:
-            for (int i=0; i<countryList.size(); i++) {
-                for (int j=0; j<borders.size(); j++) {
-                    if (countryList.get(i).getAlpha3Code().equals(borders.get(j))) {
-                        borders.set(j, countryList.get(i).getName());
-                        count ++;
-                        if (count == borders.size()) {
-                            break outerloop;
+        try {
+            if (borders.size() > 0) {
+                int count = 0;
+                outerloop:
+                for (int i=0; i<countryList.size(); i++) {
+                    for (int j=0; j<borders.size(); j++) {
+                        if (countryList.get(i).getAlpha3Code().equals(borders.get(j))) {
+                            borders.set(j, countryList.get(i).getName());
+                            count ++;
+                            if (count == borders.size()) {
+                                break outerloop;
+                            }
                         }
                     }
                 }
             }
+        } finally {
+            return borders;
         }
-        return borders;
     }
 
     public String getNativeName() {
@@ -163,6 +180,14 @@ public class Country {
         } else if (indicatorId.equals(MainActivity.INDICATOR_INFLATION)) {
             inflationIndicators.add(indicator);
         }
+    }
+
+    public void setCountryUId(String countryUId) {
+        this.countryUId = countryUId;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     @Override
