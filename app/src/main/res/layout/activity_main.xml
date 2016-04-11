@@ -5,20 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:id="@+id/imageView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/world_map"
-        android:scaleType="centerCrop" />
-
-    <android.support.v7.widget.RecyclerView
+    <fragment
+        android:id="@+id/fragmentCountryList"
+        android:name="com.ikuchko.world_population.fragments.CountryListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/countryRecyclerView"
-        android:scrollIndicators="right" />
+        tools:layout="@layout/fragment_country_list" />
 
 
 </RelativeLayout>
