@@ -124,7 +124,7 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
                 User.getUser().addCountry(country);
                 changeVisitedButton();
             } else {
-                Toast.makeText(v.getContext(), country.getName() + " have been already added to your wishlist.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), country.getName() + " has been already added to your wishlist.", Toast.LENGTH_SHORT).show();
             }
         }
     }
