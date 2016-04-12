@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.activities.CounrtyDetailActivity;
 import com.ikuchko.world_population.activities.MainActivity;
+import com.ikuchko.world_population.fragments.CountryListFragment;
 import com.ikuchko.world_population.models.Country;
 import com.squareup.picasso.Picasso;
 
@@ -66,7 +67,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.loadingDialog.show();
+                    CountryListFragment.loadingDialog.show();
                     int itemPosition = getLayoutPosition();
                     Intent intent = new Intent(context, CounrtyDetailActivity.class);
                     intent.putExtra("position", itemPosition + "");

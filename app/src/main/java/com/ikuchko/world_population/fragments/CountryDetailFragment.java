@@ -87,7 +87,7 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
         gdpPerCapitaTextView.setText(getIndicatorValue(MainActivity.INDICATOR_GDP));
         inflationTextView.setText(getIndicatorValue(MainActivity.INDICATOR_INFLATION));
         changeVisitedButton();
-        MainActivity.loadingDialog.hide();
+        CountryListFragment.loadingDialog.hide();
         return view;
     }
 
