@@ -14,11 +14,12 @@
         android:src="@drawable/world_map"
         android:scaleType="centerCrop" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/countryRecyclerView"
-        android:scrollIndicators="right" />
+    <fragment
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/fragmentCountryList"
+        android:name="com.ikuchko.world_population.fragments.CountryListFragment"
+        tools:layout="@layout/fragment_country_list"/>
 
 
 </RelativeLayout>

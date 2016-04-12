@@ -37,9 +37,9 @@ import okhttp3.Response;
 
 public class MainActivity extends FirebaseLoginBaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+//    TODO: move indicator constans to WorldBankService
     public static final String INDICATOR_GDP = "NY.GDP.PCAP.CD";
     public static final String INDICATOR_INFLATION = "FP.CPI.TOTL.ZG";
-    private CountryListAdapter adapter;
     private MenuItem signOption;
     public static ProgressDialog loadingDialog;
 
@@ -121,7 +121,7 @@ public class MainActivity extends FirebaseLoginBaseActivity {
 
 
     private void populateRecycleView() {
-        adapter = new CountryListAdapter(Country.getCountryList(), getApplicationContext());
+        CountryListAdapter adapter = new CountryListAdapter(Country.getCountryList(), getApplicationContext());
         countryRecyclerView.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         countryRecyclerView.setLayoutManager(layoutManager);
