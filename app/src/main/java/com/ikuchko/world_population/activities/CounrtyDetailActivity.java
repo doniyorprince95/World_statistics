@@ -2,7 +2,6 @@ package com.ikuchko.world_population.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.ColorRes;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -79,7 +78,7 @@ public class CounrtyDetailActivity extends AppCompatActivity {
                 return true;
 
             case R.id.favorite:
-                Intent favoriteIntent = new Intent(CounrtyDetailActivity.this, WishlistActivity.class);
+                Intent favoriteIntent = new Intent(CounrtyDetailActivity.this, WishListActivity.class);
                 startActivity(favoriteIntent);
                 return  true;
         }

@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.ikuchko.world_population.R;
 
-public class WishlistActivity extends AppCompatActivity{
+public class WishListActivity extends AppCompatActivity{
 
 
     @Override
