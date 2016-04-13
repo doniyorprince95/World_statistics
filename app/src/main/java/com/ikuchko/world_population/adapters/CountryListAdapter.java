@@ -89,7 +89,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
                         int itemPosition = getLayoutPosition();
                         Intent intent = new Intent(context, CounrtyDetailActivity.class);
                         intent.putExtra("position", itemPosition + "");
-                        intent.putExtra("country", Parcels.wrap(countries));
+                        intent.putExtra("countries", Parcels.wrap(countries));
                         context.startActivity(intent);
                     }
                 }

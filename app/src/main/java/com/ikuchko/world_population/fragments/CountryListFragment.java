@@ -87,8 +87,8 @@ public class CountryListFragment extends Fragment {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     CountriesService.processCountries(response);
-//                    getIndicators(INDICATOR_GDP);
-//                    getIndicators(INDICATOR_INFLATION);
+                    getIndicators(WorldBankService.INDICATOR_GDP);
+                    getIndicators(WorldBankService.INDICATOR_INFLATION);
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override

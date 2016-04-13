@@ -29,9 +29,6 @@ import java.util.Map;
 
 public class MainActivity extends FirebaseLoginBaseActivity implements OnCountrySelectedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
-//    TODO: move indicator constans to WorldBankService
-    public static final String INDICATOR_GDP = "NY.GDP.PCAP.CD";
-    public static final String INDICATOR_INFLATION = "FP.CPI.TOTL.ZG";
     private MenuItem signOption;
     private Integer position;
     ArrayList<Country> countries;

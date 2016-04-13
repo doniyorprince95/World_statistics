@@ -26,6 +26,8 @@ import okhttp3.Response;
 public class WorldBankService {
     private final static String TAG = WorldBankService.class.getSimpleName();
     private final static String GDP_INDICATOR = "/indicators/NY.GDP.PCAP.CD";
+    public static final String INDICATOR_GDP = "NY.GDP.PCAP.CD";
+    public static final String INDICATOR_INFLATION = "FP.CPI.TOTL.ZG";
     private String countryCode;
     private Context context;
 

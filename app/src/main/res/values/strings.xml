@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">World_population</string>
+    <string name="app_name">World statistics </string>
     <string name="signin">Sing in</string>
 
     <!--API URLs-->

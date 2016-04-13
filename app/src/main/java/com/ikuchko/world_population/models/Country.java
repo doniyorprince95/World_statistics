@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ikuchko.world_population.activities.MainActivity;
+import com.ikuchko.world_population.services.WorldBankService;
 
 import org.parceler.Parcel;
 
@@ -175,9 +176,9 @@ public class Country {
 
     public void setIndicatorGDP(String indicatorId, String indicatorName, String value, String date) {
         Indicator indicator = new Indicator(indicatorName, value, date);
-        if (indicatorId.equals(MainActivity.INDICATOR_GDP)) {
+        if (indicatorId.equals(WorldBankService.INDICATOR_GDP)) {
             gdpIndicators.add(indicator);
-        } else if (indicatorId.equals(MainActivity.INDICATOR_INFLATION)) {
+        } else if (indicatorId.equals(WorldBankService.INDICATOR_INFLATION)) {
             inflationIndicators.add(indicator);
         }
     }

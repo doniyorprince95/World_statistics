@@ -18,6 +18,7 @@ import com.ikuchko.world_population.activities.MainActivity;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.models.Indicator;
 import com.ikuchko.world_population.models.User;
+import com.ikuchko.world_population.services.WorldBankService;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -84,8 +85,8 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
         bordersTextView.setText(android.text.TextUtils.join(", ", country.getBorders()));
         currenciesTextView.setText(android.text.TextUtils.join(", ", country.getCurrencies()));
         languagesTextView.setText(android.text.TextUtils.join(", ", country.getLanguages()));
-        gdpPerCapitaTextView.setText(getIndicatorValue(MainActivity.INDICATOR_GDP));
-        inflationTextView.setText(getIndicatorValue(MainActivity.INDICATOR_INFLATION));
+        gdpPerCapitaTextView.setText(getIndicatorValue(WorldBankService.INDICATOR_GDP));
+        inflationTextView.setText(getIndicatorValue(WorldBankService.INDICATOR_INFLATION));
         changeVisitedButton();
         CountryListFragment.loadingDialog.hide();
         return view;
@@ -93,16 +94,16 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
 
     private String getIndicatorValue (String indicatorId) {
         ArrayList<Indicator> indicators = new ArrayList<>();
-        if (indicatorId.equals(MainActivity.INDICATOR_GDP)) {
+        if (indicatorId.equals(WorldBankService.INDICATOR_GDP)) {
             indicators = country.getGdpIndicators();
-        } else if (indicatorId.equals(MainActivity.INDICATOR_INFLATION)) {
+        } else if (indicatorId.equals(WorldBankService.INDICATOR_INFLATION)) {
             indicators = country.getInflationIndicators();
         }
         for (Indicator indicator : indicators) {
             if (!(indicator.getValue().equals(""))) {
                 switch (indicatorId) {
-                    case MainActivity.INDICATOR_GDP : return "$" + indicator.getValue();
-                    case MainActivity.INDICATOR_INFLATION : return indicator.getValue() + " %";
+                    case WorldBankService.INDICATOR_GDP : return "$" + indicator.getValue();
+                    case WorldBankService.INDICATOR_INFLATION : return indicator.getValue() + " %";
                 }
 
             }
