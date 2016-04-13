@@ -1,7 +1,6 @@
 package com.ikuchko.world_population.activities;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,7 @@ import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
 import com.firebase.ui.auth.core.FirebaseLoginError;
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.WorldPopulationApplication;
-import com.ikuchko.world_population.apapters.CountryListAdapter;
+import com.ikuchko.world_population.adapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.models.User;
 import com.ikuchko.world_population.services.CountriesService;
@@ -27,7 +26,6 @@ import com.ikuchko.world_population.services.WorldBankService;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

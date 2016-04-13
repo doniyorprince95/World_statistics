@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ikuchko.world_population.R;
-import com.ikuchko.world_population.apapters.CountryListAdapter;
+import com.ikuchko.world_population.adapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.services.CountriesService;
 import com.ikuchko.world_population.services.WorldBankService;

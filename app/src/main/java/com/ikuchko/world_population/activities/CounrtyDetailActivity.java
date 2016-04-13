@@ -14,7 +14,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.ikuchko.world_population.R;
-import com.ikuchko.world_population.apapters.CountryPagerAdapter;
+import com.ikuchko.world_population.adapters.CountryPagerAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.models.User;
 import com.ikuchko.world_population.util.ScaleAndFadePageTransformer;

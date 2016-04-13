@@ -1,7 +1,10 @@
-package com.ikuchko.world_population.apapters;
+package com.ikuchko.world_population.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +15,7 @@ import android.widget.TextView;
 
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.activities.CounrtyDetailActivity;
-import com.ikuchko.world_population.activities.MainActivity;
+import com.ikuchko.world_population.fragments.CountryDetailFragment;
 import com.ikuchko.world_population.fragments.CountryListFragment;
 import com.ikuchko.world_population.models.Country;
 import com.squareup.picasso.Picasso;
@@ -31,6 +34,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
     private final static String TAG = CountryListAdapter.class.getSimpleName();
     private ArrayList<Country> countries = new ArrayList<>();
     private Context context;
+    private int orientation;
 
     public CountryListAdapter(ArrayList<Country> countries, Context context) {
         this.countries = countries;
@@ -67,12 +71,20 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CountryListFragment.loadingDialog.show();
-                    int itemPosition = getLayoutPosition();
-                    Intent intent = new Intent(context, CounrtyDetailActivity.class);
-                    intent.putExtra("position", itemPosition + "");
-                    intent.putExtra("country", Parcels.wrap(countries));
-                    context.startActivity(intent);
+                    int currentPosition = getLayoutPosition();
+                    if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        CountryDetailFragment countryDetailFragment = CountryDetailFragment.newInstance(countries.get(currentPosition));
+                        FragmentTransaction fragmentTransaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.countryDetailContainer, countryDetailFragment);
+                        fragmentTransaction.commit();
+                    } else {
+                        CountryListFragment.loadingDialog.show();
+                        int itemPosition = getLayoutPosition();
+                        Intent intent = new Intent(context, CounrtyDetailActivity.class);
+                        intent.putExtra("position", itemPosition + "");
+                        intent.putExtra("country", Parcels.wrap(countries));
+                        context.startActivity(intent);
+                    }
                 }
             });
         }
@@ -84,6 +96,7 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
                 countryName.setText(country.getName());
                 capital.setText(country.getCapital());
                 population.setText(country.getPopulation().toString());
+                orientation = itemView.getResources().getConfiguration().orientation;
             } catch (NullPointerException npe) {
                 Log.e(TAG, "nullPointException on: " + npe.getMessage());
                 npe.printStackTrace();

@@ -1,11 +1,10 @@
-package com.ikuchko.world_population.apapters;
+package com.ikuchko.world_population.adapters;
 
 import android.support.v4.view.MotionEventCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.Query;

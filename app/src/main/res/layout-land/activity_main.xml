@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/world_map"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        android:baselineAligned="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <fragment
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:id="@+id/fragmentCountryList"
+            android:name="com.ikuchko.world_population.fragments.CountryListFragment"
+            tools:layout="@layout/fragment_country_list"/>
+
+        <View android:background="@color/colorAccent"
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:id="@+id/countryDetailContainer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4">
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

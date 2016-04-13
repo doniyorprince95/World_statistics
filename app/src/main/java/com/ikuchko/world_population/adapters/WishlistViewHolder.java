@@ -1,9 +1,7 @@
-package com.ikuchko.world_population.apapters;
+package com.ikuchko.world_population.adapters;
 
 import android.content.Context;
-import android.support.annotation.BinderThread;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;

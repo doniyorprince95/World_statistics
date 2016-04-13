@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.firebase.client.Firebase;
 import com.firebase.client.Query;
 import com.ikuchko.world_population.R;
-import com.ikuchko.world_population.apapters.FirebaseWishlistAdapter;
+import com.ikuchko.world_population.adapters.FirebaseWishlistAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.models.User;
 import com.ikuchko.world_population.util.OnStartDragListener;

@@ -1,4 +1,4 @@
-package com.ikuchko.world_population.apapters;
+package com.ikuchko.world_population.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
