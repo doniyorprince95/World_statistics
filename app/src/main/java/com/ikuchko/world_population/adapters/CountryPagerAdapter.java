@@ -27,7 +27,11 @@ public class CountryPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount () {
-        return country.size();
+        if (country == null) {
+            return 0;
+        } else {
+            return country.size();
+        }
     }
 
     @Override

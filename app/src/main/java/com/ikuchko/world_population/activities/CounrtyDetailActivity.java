@@ -1,6 +1,7 @@
 package com.ikuchko.world_population.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -35,9 +36,12 @@ public class CounrtyDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            finish();
+        }
         setContentView(R.layout.activity_counrty_detail);
         ButterKnife.bind(this);
-        countries = Parcels.unwrap(getIntent().getParcelableExtra("country"));
+        countries = Parcels.unwrap(getIntent().getParcelableExtra("countries"));
         int startPosition = Integer.parseInt(getIntent().getStringExtra("position"));
         adapter = new CountryPagerAdapter(getSupportFragmentManager(), countries);
         viewPager.setAdapter(adapter);

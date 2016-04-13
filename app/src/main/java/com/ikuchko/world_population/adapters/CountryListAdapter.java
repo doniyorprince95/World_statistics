@@ -18,6 +18,7 @@ import com.ikuchko.world_population.activities.CounrtyDetailActivity;
 import com.ikuchko.world_population.fragments.CountryDetailFragment;
 import com.ikuchko.world_population.fragments.CountryListFragment;
 import com.ikuchko.world_population.models.Country;
+import com.ikuchko.world_population.util.OnCountrySelectedListener;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -32,19 +33,22 @@ import butterknife.ButterKnife;
  */
 public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.CountryViewHolder>{
     private final static String TAG = CountryListAdapter.class.getSimpleName();
+    private OnCountrySelectedListener countrySelectedListener;
     private ArrayList<Country> countries = new ArrayList<>();
     private Context context;
     private int orientation;
+    private  Integer position;
 
-    public CountryListAdapter(ArrayList<Country> countries, Context context) {
+    public CountryListAdapter(ArrayList<Country> countries, Context context, OnCountrySelectedListener onCountrySelectedListener) {
         this.countries = countries;
         this.context = context;
+        this.countrySelectedListener =  onCountrySelectedListener;
     }
 
     @Override
     public CountryListAdapter.CountryViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
         View view =LayoutInflater.from(parent.getContext()).inflate(R.layout.country_list_item, parent, false);
-        CountryViewHolder viewHolder = new CountryViewHolder (view);
+        CountryViewHolder viewHolder = new CountryViewHolder (view, countries, countrySelectedListener);
         return viewHolder;
     }
 
@@ -64,15 +68,18 @@ public class CountryListAdapter extends RecyclerView.Adapter<CountryListAdapter.
         @Bind(R.id.population) TextView population;
         @Bind(R.id.capital) TextView capital;
 
-        public CountryViewHolder(View itemView) {
+        public CountryViewHolder(View itemView, ArrayList<Country> countryList, OnCountrySelectedListener onCountrySelectedListener) {
             super(itemView);
             context = itemView.getContext();
             ButterKnife.bind(this, itemView);
+            countries = countryList;
+            countrySelectedListener = onCountrySelectedListener;
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int currentPosition = getLayoutPosition();
                     if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        countrySelectedListener.onCountrySelected(currentPosition, countries);
                         CountryDetailFragment countryDetailFragment = CountryDetailFragment.newInstance(countries.get(currentPosition));
                         FragmentTransaction fragmentTransaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.countryDetailContainer, countryDetailFragment);

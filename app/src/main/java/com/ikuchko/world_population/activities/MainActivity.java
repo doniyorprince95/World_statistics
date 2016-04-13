@@ -1,9 +1,9 @@
 package com.ikuchko.world_population.activities;
 
-import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,114 +18,44 @@ import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
 import com.firebase.ui.auth.core.FirebaseLoginError;
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.WorldPopulationApplication;
-import com.ikuchko.world_population.adapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.models.User;
-import com.ikuchko.world_population.services.CountriesService;
-import com.ikuchko.world_population.services.WorldBankService;
+import com.ikuchko.world_population.util.OnCountrySelectedListener;
 
-import java.io.IOException;
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
 import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-
-public class MainActivity extends FirebaseLoginBaseActivity {
+public class MainActivity extends FirebaseLoginBaseActivity implements OnCountrySelectedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 //    TODO: move indicator constans to WorldBankService
     public static final String INDICATOR_GDP = "NY.GDP.PCAP.CD";
     public static final String INDICATOR_INFLATION = "FP.CPI.TOTL.ZG";
     private MenuItem signOption;
-    public static ProgressDialog loadingDialog;
+    private Integer position;
+    ArrayList<Country> countries;
 
-    @Bind(R.id.countryRecyclerView) RecyclerView countryRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                position = savedInstanceState.getInt("position");
+                countries = Parcels.unwrap(savedInstanceState.getParcelable("countries"));
+                if (countries != null) {
+                    Intent intent = new Intent(MainActivity.this, CounrtyDetailActivity.class);
+                    intent.putExtra("position", position.toString());
+                    intent.putExtra("countries", Parcels.wrap(countries));
+                    startActivity(intent);
+                }
+            }
+        }
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        initializeProgressDialog();
-        loadingDialog.show();
-
-        getCountries();
-    }
-
-    private void initializeProgressDialog() {
-        loadingDialog = new ProgressDialog(this);
-        loadingDialog.setTitle("loading...");
-        loadingDialog.setMessage("Preparing data...");
-        loadingDialog.setCancelable(false);
-    }
-
-    private void getCountries() {
-        final CountriesService countryService = new CountriesService(this);
-
-        if (Country.getCountryList().size() == 0) {
-            countryService.findCountries(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    e.printStackTrace();
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    CountriesService.processCountries(response);
-//                    getIndicators(INDICATOR_GDP);
-//                    getIndicators(INDICATOR_INFLATION);
-
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            populateRecycleView();
-                        }
-                    });
-
-                }
-            });
-        } else {
-            populateRecycleView();
-        }
-    }
-
-    private void getIndicators (final String indicator) {
-        for (final Country country : Country.getCountryList()) {
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    final WorldBankService worldBankService = new WorldBankService(MainActivity.this, country.getAlpha2Code());
-                    worldBankService.findIndicator(indicator, new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            WorldBankService.processIndicator(response);
-                        }
-                    });
-                }
-            };
-
-            Thread thread = new Thread(runnable);
-            thread.setName("indicatorRequest");
-            thread.start();
-        }
     }
 
 
-    private void populateRecycleView() {
-        CountryListAdapter adapter = new CountryListAdapter(Country.getCountryList(), getApplicationContext());
-        countryRecyclerView.setAdapter(adapter);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-        countryRecyclerView.setLayoutManager(layoutManager);
-        countryRecyclerView.setHasFixedSize(true);
-        loadingDialog.hide();
-    }
 
     //inflate the menu
     @Override
@@ -231,4 +161,18 @@ public class MainActivity extends FirebaseLoginBaseActivity {
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (position != null && countries != null) {
+            outState.putInt("position", Integer.valueOf(position));
+            outState.putParcelable("countries", Parcels.wrap(countries));
+            super.onSaveInstanceState(outState);
+        }
+    }
+
+    @Override
+    public void onCountrySelected(Integer position, ArrayList<Country> countries) {
+        this.position = position;
+        this.countries = countries;
+    }
 }

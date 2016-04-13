@@ -2,6 +2,7 @@ package com.ikuchko.world_population.fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import com.ikuchko.world_population.adapters.CountryListAdapter;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.services.CountriesService;
 import com.ikuchko.world_population.services.WorldBankService;
+import com.ikuchko.world_population.util.OnCountrySelectedListener;
 
 import java.io.IOException;
 
@@ -32,9 +34,20 @@ public class CountryListFragment extends Fragment {
     private static final String TAG = CountryListFragment.class.getSimpleName();
     @Bind(R.id.countryRecyclerView) RecyclerView countryRecyclerView;
     public static ProgressDialog loadingDialog;
+    OnCountrySelectedListener onCountrySelectedListener;
 
     public CountryListFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            onCountrySelectedListener = (OnCountrySelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + e.getMessage());
+        }
     }
 
     @Override
@@ -119,7 +132,7 @@ public class CountryListFragment extends Fragment {
 
 
     private void populateRecycleView() {
-        CountryListAdapter adapter = new CountryListAdapter(Country.getCountryList(), getContext());
+        CountryListAdapter adapter = new CountryListAdapter(Country.getCountryList(), getContext(), onCountrySelectedListener);
         countryRecyclerView.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         countryRecyclerView.setLayoutManager(layoutManager);
