@@ -1,21 +1,38 @@
-# WORLD IN NUMBERS
-
-##### Epicodus code review project using Android Studio, 03.18.2016
+# WORLD STATISTICS
 
 ##### Illia Kuchko
 
 ## Description
-World In Numbers application called to show countries indicators such as HDI, GDP and others and
-your position in world population.
+World statistics application showing countries information and indicators such as HDI, GDP and others.
+Application demonstrates some of the following Android development concepts:
+
+* Animations
+* User geolocation
+* Gesture detection
+* Implicit intents
+* Fragments (and moving data between fragments and activities)
+* Using data from different APIs (api.worldbank.org, restcountries.eu, geonames.org, Google Maps)
+* Google map customization (info windows and markers)
+
 
 ## Setup
+
+You will need the following programs installed on your computer.
+* Android Studio
+* Java JDK 8+
+* Android SDK
 
 Clone this repository:
 ```
 $ cd ~/Desktop
-$ git clone https://github.com/ikuchko/world_statistic.git
-$ cd world_statistic
+$ git clone https://github.com/ikuchko/world_statistics.git
+$ cd world_statistics
 ```
+Run on either an emulator or an Android OS Device connected to a computer
+
+## Technologies Used
+
+AndroidStudio, AndroidSDK, Java v1.8, Gradle
 
 ## Legal
 
