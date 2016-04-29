@@ -72,7 +72,7 @@ public class WorldBankService {
                     String date = indicatorsJSON.getString("date");
 
                     if (!(value.equals("null"))) {
-                        Country country = Country.getCountryByCode(countryCode);
+                        Country country = Country.getCountry(countryCode);
                         if (country != null) {
                             country.setIndicatorGDP(indicatorId, indicatorName, value, date);
                         }

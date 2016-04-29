@@ -19,7 +19,11 @@ import com.ikuchko.world_population.services.CountriesService;
 import com.ikuchko.world_population.services.WorldBankService;
 import com.ikuchko.world_population.util.OnCountrySelectedListener;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -89,6 +93,7 @@ public class CountryListFragment extends Fragment {
                     CountriesService.processCountries(response);
                     getIndicators(WorldBankService.INDICATOR_GDP);
                     getIndicators(WorldBankService.INDICATOR_INFLATION);
+                    Country.populateCountryCoordinates(readCountryFromCSV());  //populate country with coordinates form CSV file.
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -130,6 +135,20 @@ public class CountryListFragment extends Fragment {
         }
     }
 
+    public List<String[]> readCountryFromCSV () {
+        String nextLine;
+        List<String[]> countryCoordinatsList = new ArrayList<String[]>();
+        try {
+            InputStreamReader inputStream = new InputStreamReader(getContext().getAssets().open("countries.csv"));
+            BufferedReader reader = new BufferedReader(inputStream);
+            while ((nextLine = reader.readLine()) != null) {
+                countryCoordinatsList.add(nextLine.split(","));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return countryCoordinatsList;
+    }
 
     private void populateRecycleView() {
         CountryListAdapter adapter = new CountryListAdapter(Country.getCountryList(), getContext(), onCountrySelectedListener);

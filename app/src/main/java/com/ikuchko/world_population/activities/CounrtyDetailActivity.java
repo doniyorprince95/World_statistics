@@ -47,8 +47,6 @@ public class CounrtyDetailActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(startPosition);
         viewPager.setPageTransformer(true, new ScaleAndFadePageTransformer());
-        PagerTabStrip pagerTabStrip = (PagerTabStrip) findViewById(R.id.pagerHeader);
-        pagerTabStrip.setTabIndicatorColor(Color.GRAY);
     }
 
     //inflate the menu

@@ -24,7 +24,11 @@ import com.ikuchko.world_population.util.OnCountrySelectedListener;
 
 import org.parceler.Parcels;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends FirebaseLoginBaseActivity implements OnCountrySelectedListener {
@@ -32,7 +36,6 @@ public class MainActivity extends FirebaseLoginBaseActivity implements OnCountry
     private MenuItem signOption;
     private Integer position;
     ArrayList<Country> countries;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,6 @@ public class MainActivity extends FirebaseLoginBaseActivity implements OnCountry
         }
         setContentView(R.layout.activity_main);
     }
-
 
 
     //inflate the menu

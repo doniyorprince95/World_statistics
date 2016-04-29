@@ -4,6 +4,7 @@ package com.ikuchko.world_population.fragments;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.ikuchko.world_population.R;
 import com.ikuchko.world_population.WorldPopulationApplication;
-import com.ikuchko.world_population.activities.MainActivity;
 import com.ikuchko.world_population.models.Country;
 import com.ikuchko.world_population.models.Indicator;
 import com.ikuchko.world_population.models.User;
@@ -32,7 +38,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CountryDetailFragment extends Fragment implements View.OnClickListener {
+public class CountryDetailFragment extends Fragment implements View.OnClickListener, OnMapReadyCallback {
     @Bind(R.id.countryTextView) TextView countryTextView;
     @Bind(R.id.flagImageView) ImageView flagImageView;
     @Bind(R.id.mapImage) ImageView mapImage;
@@ -50,7 +56,7 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
     @Bind(R.id.inflationTextView) TextView inflationTextView;
     @Bind(R.id.visitedButton) FloatingActionButton visitedButton;
     private Country country;
-
+    private GoogleMap mMap;
 
     public static CountryDetailFragment newInstance(Country country) {
         CountryDetailFragment countryDetailFragment = new CountryDetailFragment();
@@ -94,8 +100,33 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
         gdpPerCapitaTextView.setText(getIndicatorValue(WorldBankService.INDICATOR_GDP));
         inflationTextView.setText(getIndicatorValue(WorldBankService.INDICATOR_INFLATION));
         changeVisitedButton();
+
+
+//        TODO: find map fragment which is neasted in CountryDetailFragment
+        final SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        //position the markers and camera separately from getting the map, to avoid the map flashing at 0,0 before moving camera
+        if (mapFragment.getView() != null) {
+            mapFragment.getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    initializeMapMarkers();
+                }
+            });
+        }
+
         CountryListFragment.loadingDialog.hide();
         return view;
+    }
+
+    private void initializeMapMarkers() {
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        LatLng minLatLng = new LatLng(Double.parseDouble(country.getMinLat()), Double.parseDouble(country.getMinLong()));
+        LatLng maxLatLng = new LatLng(Double.parseDouble(country.getMaxLat()), Double.parseDouble(country.getMaxLong()));
+        builder.include(minLatLng);
+        builder.include(maxLatLng);
+        LatLngBounds bounds = builder.build();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0));
     }
 
     private String getIndicatorValue (String indicatorId) {
@@ -147,5 +178,10 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
             }
             visitedButton.setImageResource(map.get("star"));
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
     }
 }

@@ -1,6 +1,7 @@
 package com.ikuchko.world_population.models;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ikuchko.world_population.activities.MainActivity;
@@ -9,6 +10,7 @@ import com.ikuchko.world_population.services.WorldBankService;
 import org.parceler.Parcel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by iliak on 3/20/16.
@@ -33,6 +35,10 @@ public class Country {
     String flagImage;
     ArrayList<Indicator> gdpIndicators = new ArrayList<>();
     ArrayList<Indicator> inflationIndicators = new ArrayList<>();
+    String minLong;
+    String minLat;
+    String maxLong;
+    String maxLat;
     static ArrayList<Country> countryList = new ArrayList<>();
 
 
@@ -149,6 +155,22 @@ public class Country {
         return countryList;
     }
 
+    public String getMinLong() {
+        return minLong;
+    }
+
+    public String getMinLat() {
+        return minLat;
+    }
+
+    public String getMaxLong() {
+        return maxLong;
+    }
+
+    public String getMaxLat() {
+        return maxLat;
+    }
+
     public String getShareContent() {
         String country = "Country: " + getName();
         String capital = "Capital: " + getCapital();
@@ -165,9 +187,9 @@ public class Country {
                 + population  + "\n" + area + "\n" + borders + "\n" + currenceis + "\n" + languages;
     }
 
-    public static Country getCountryByCode(String code) {
+    public static Country getCountry(String searchName) {
         for (int i=0; i<countryList.size(); i++) {
-            if (countryList.get(i).getAlpha2Code().equals(code)) {
+            if ((countryList.get(i).getAlpha2Code().equals(searchName)) || (countryList.get(i).getName().equals(searchName))) {
                 return countryList.get(i);
             }
         }
@@ -199,5 +221,17 @@ public class Country {
                     (country.getCapital().equals(this.getCapital()));
         }
         return false;
+    }
+
+    public static void populateCountryCoordinates(List<String[]> coordinateList) {
+        for (int i=0; i<coordinateList.size(); i++) {
+            Country country = getCountry(coordinateList.get(i)[4]);
+            if (country != null) {
+                country.minLong = coordinateList.get(i)[0];
+                country.minLat = coordinateList.get(i)[1];
+                country.maxLong = coordinateList.get(i)[2];
+                country.maxLat = coordinateList.get(i)[3];
+            }
+        }
     }
 }
