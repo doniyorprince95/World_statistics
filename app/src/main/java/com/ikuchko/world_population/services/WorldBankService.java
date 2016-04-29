@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,7 +38,8 @@ public class WorldBankService {
     }
 
     public void findIndicator (String indicator, Callback callback) {
-        String url = context.getString(R.string.worldBank_url) + countryCode + "/indicators/" + indicator + "?format=json&date=2000:2014";
+        Integer currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        String url = context.getString(R.string.worldBank_url) + countryCode + "/indicators/" + indicator + "?format=json&date=" + (currentYear - 5) + ":" + currentYear;
 
         OkHttpClient client = new OkHttpClient.Builder().build();
         Request request = new Request.Builder().url(url).build();

@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 public class CountryDetailFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.countryTextView) TextView countryTextView;
     @Bind(R.id.flagImageView) ImageView flagImageView;
+    @Bind(R.id.mapImage) ImageView mapImage;
     @Bind(R.id.capitalTextView) TextView capitalTextView;
     @Bind(R.id.regionTextView) TextView regionTextView;
     @Bind(R.id.nativeNameTextView) TextView nativeNameTextView;
@@ -74,6 +75,11 @@ public class CountryDetailFragment extends Fragment implements View.OnClickListe
 
         visitedButton.setOnClickListener(this);
         Picasso.with(view.getContext()).load(country.getFlagImage()).resize(300, 156).centerCrop().into(flagImageView);
+        Picasso.with(view.getContext()).load("https://maps.googleapis.com/maps/api/staticmap?center=" + country.getName().replace(" ", "+") + "&zoom=3&size=300x150&maptype=roadmap" +
+                "&key=AIzaSyA32tH3HzTfLJ9oXp73Ka-uaIlCKA8ojxY")
+                .resize(300, 156)
+                .centerCrop()
+                .into(mapImage);
         countryTextView.setText(country.getName());
         capitalTextView.setText(country.getCapital());
         regionTextView.setText(country.getRegion());
